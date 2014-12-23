@@ -1,0 +1,203 @@
+body {
+  color:white;
+  font-family: 'Roboto', sans-serif;
+  margin:5px 0 0 21px;
+  width:100%;
+  height:100%;
+}
+
+a#fork-on-github,
+header img#click-here {
+  display:none;
+}
+
+a {
+  text-decoration:none;  
+}
+
+header,
+article#core {
+  width:92%;
+}
+
+header a#twitter-button {
+  display:inline-block;
+  position:relative;
+  float:right;
+  bottom:-27px;
+  right:-3px;
+  height:21px;
+  background-color:#fff;
+  border:1px solid #888;
+  border-bottom:none;
+  border-radius:3px;
+  width:75px;
+}
+header a#twitter-button i {
+  background: #fff url(https://g.twimg.com/twitter-bird-16x16.png) 5px 1px no-repeat;
+  width:20px;
+  height:16px;
+  display:inline-block;
+  position:relative;
+  left:2px;
+}
+header a#twitter-button span {
+  position:relative;
+  color:black;
+  font-size:15px;
+  left:6px;
+  bottom:2px;
+}
+
+header #header-text {
+  font-size:0.9em;
+}
+
+header span#logo {
+  font-size:91px;
+  color: #F5F5C4;
+  font-family: Open Sans ;
+}
+
+header img#logo-image {
+  width:67px;
+  position:relative;
+  left:7px;
+  bottom:50px;
+}
+
+article#core {
+  display:inline-block;
+  margin: 27px 0;
+  position:relative;
+  border-top:1px solid white;
+}
+
+article#core span.headline {
+  font-size:25px;
+  padding:11px 0px;
+  display:block;
+}
+
+article#core div,
+article#core pre {
+  padding:7px;
+  border:3px solid black;
+  border-radius:4px;
+}
+
+article#core pre {
+  background-color:#254061;
+  margin:0;
+  font-size:23px;
+  overflow:auto;
+}
+
+article#core pre.code {
+  padding:23px;
+}
+
+article#core div.tips {
+  background:rgba(204, 204, 204, 0.7) url("../img/infos.png") no-repeat 99.9% 1px;
+  margin:3px 0;
+  font-size:17px;
+  color:black;
+  padding-right:33px;
+}
+
+article#core #more-infos,
+article#core #more-infos div#more-infos-links {
+  border:none;
+}
+
+article#core span#more-infos-headline {
+  border-bottom:1px solid white
+}
+
+article#core div#more-infos-links a {
+  display:block;
+  color:#FFF;
+  font-size:23px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+article#core div#more-infos-links {
+  margin-top:17px;
+}
+
+aside#colors {
+  width:95%;
+  display:inline-block;
+  position:relative;
+  clear:both;
+}
+
+aside#colors * {
+  position:relative;
+  display:block;
+  margin:auto;  
+}
+
+aside#colors div.color-square {
+  width:50px;
+  height:50px;  
+  opacity:0.8;
+}
+
+aside#colors a#why-link {
+  width:12px;
+  height:32px;
+  left:10px;
+  padding:3px;
+  color:black;
+  font-size:25px;
+  font-weight:bold;
+  border-right:44px solid transparent;
+  border-left:42px solid transparent;
+  border-bottom:54px solid rgba(204, 204, 204, 0.8);
+}
+
+header img#logo-image,
+aside#colors div.color-square.even, 
+aside#colors div.color-square.odd {
+  cursor:pointer;
+}
+
+@media (min-width: 597px) {
+  header img#click-here {
+    display:inline;
+    width:121px;
+  }
+  a#fork-on-github {
+    position:relative;
+    display:inline;
+    z-index:10000;
+  }
+}
+
+@media (min-width: 680px) {
+  header #header-text {
+    font-size:20px;
+  }
+}
+
+@media (min-width: 960px) {
+  header,
+  article#core {
+    width:70%;
+  }
+  header img#click-here {
+    width:161px;
+  }
+  aside#colors {
+    width:28%;
+    position:absolute;
+  }
+}
+
+@media (min-width: 1366px) {
+  header #header-text {
+    font-size:27px;
+  }
+}
