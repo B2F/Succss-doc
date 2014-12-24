@@ -83,6 +83,7 @@ window.onload = function() {
   imgLogo = document.getElementById('logo-image');
   imgLogo.addEventListener('click', rainbowClick);
   whyLink.addEventListener('click', function() {
+    params.tweakImg = true;
     location.search = getParams();
   });
   setSubHeadline(defaultHeadline);
@@ -178,7 +179,8 @@ function setDefaultState() {
 function getParams() {
   rgb = decodeURIComponent(document.body.style.backgroundColor.replace(/[#rgba()]/g, '')).split(', ');
   hex = ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
-  return "?variation="+variation+"&breakage="+breakage+"&speed="+mvtInterval+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+"&tweakImg=true";
+  params.tweakImg ? tweakImgParam = "&tweakImg=true" : tweakImgParam = '';
+  return "?variation="+variation+"&breakage="+breakage+"&speed="+mvtInterval+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+tweakImgParam;
 }
 
 function setTwitterShare() {
