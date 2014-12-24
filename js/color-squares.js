@@ -177,12 +177,8 @@ function setDefaultState() {
 
 function getParams() {
   rgb = decodeURIComponent(document.body.style.backgroundColor.replace(/[#rgba()]/g, '')).split(', ');
-  hex = rgbToHex(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
+  hex = ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
   return "?variation="+variation+"&breakage="+breakage+"&speed="+mvtInterval+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+"&tweakImg=true";
-}
-
-function rgbToHex(r, g, b) {
-  return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 function setTwitterShare() {
@@ -197,4 +193,6 @@ function setPage(pageName) {
   for (var p=0;p<pages.length;p++) {pages[p].style.display='none';}
   var page = document.getElementById(pageName);
   page.style.display = 'block';
+  var menu = document.getElementById('more-infos');
+  menu.style.display = 'block';
 }

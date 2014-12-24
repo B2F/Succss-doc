@@ -7,7 +7,8 @@ body {
 }
 
 a#fork-on-github,
-header img#click-here {
+header img#click-here,
+div#core div#more-infos {
   display:none;
 }
 
