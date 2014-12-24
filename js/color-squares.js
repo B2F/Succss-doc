@@ -86,9 +86,6 @@ window.onload = function() {
     location.search = getParams();
   });
   setSubHeadline(defaultHeadline);
-  window.setInterval(function() {
-    moveSideBar();
-  }, mvtInterval);
   setTwitterShare();
 }
 
@@ -109,6 +106,7 @@ function moveSideBar() {
   }
   if (!broken && baseVariation >= breakage) {
     broken=true;
+    variation = baseVariation += 100;
     var article = document.getElementById('core');
     var aside = document.getElementById('colors');
     var headerText = document.getElementById('header-text');
@@ -121,7 +119,9 @@ function moveSideBar() {
     document.body.removeChild(article);
     headerText.removeChild(staticLine);
     aside.style.width = "100%";
+    setSubHeadline(5);
   }
+  window.setTimeout(function() {moveSideBar();}, mvtInterval);
   return startY;
 }
 
@@ -165,7 +165,6 @@ function rainbowClick() {
       setSubHeadline(Math.floor(Math.random()*subHeadline.length));
     },500);
   }
-  moveSideBar();
 }
 
 function setDefaultState() {
