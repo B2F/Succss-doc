@@ -1,5 +1,5 @@
 var params = {};
-location.search.substr(1).split("&").forEach(function(item) {params[item.split("=")[0]] = item.split("=")[1]});
+location.search.substr(1).split("&").forEach(function(item) {params[item.split("=")[0]] = item.split("=")[1];});
 
 var currentHeadline = defaultHeadline = parseInt(params.headline) || 0;
 var yGap = parseInt(params.ygap) || 9;
@@ -19,7 +19,7 @@ var subHeadline = [
   'SUCCSS, you\'ll still need to fix what is broken.',
   'SUCCSS.ifzenelse.net, it\'s not easter yet did you find all the "eggs"?',
   'Fork SUCCSS, look under the hood.',
-  'Check your <strong>style</strong> with SUCCSS.',
+  'Check your <strong>style</strong> with SUCCSS.'
 ];
 
 var colors = {
@@ -47,7 +47,7 @@ var colors = {
   "purple1":"#7363FF",
   "purple2":"#5F3BFF",
   "purple3":"#7300FF",
-  "purple4":"#7A33FF",
+  "purple4":"#7A33FF"
 };
 
 var colorsHex = Array();
@@ -60,7 +60,7 @@ window.onload = function() {
   var i=0;
   for (var c in colors) {
     i++;
-    (i%2 == 1) ? suffix = "even" : suffix = "odd";
+    (i%2 === 1) ? suffix = "even" : suffix = "odd";
     colorSquare = document.createElement('div');
     colorSquare.id = c;
     colorSquare.className = "color-square " + suffix;
@@ -88,7 +88,7 @@ window.onload = function() {
   setSubHeadline(defaultHeadline);
   params.page ? setPage(params.page) : setPage('home');
   setTwitterShare();
-}
+};
 
 function moveSideBar() {
   var i=0;
@@ -108,7 +108,7 @@ function moveSideBar() {
   if (!broken && baseVariation >= breakage) {
     broken=true;
     variation = baseVariation += 100;
-    var article = document.getElementById('core');
+    var core = document.getElementById('core');
     var aside = document.getElementById('colors');
     var headerText = document.getElementById('header-text');
     var staticLine = document.getElementById('static-line');
@@ -117,7 +117,7 @@ function moveSideBar() {
     twitterButton.style.top = '174px';
     twitterButton.style.left = '23px';
     twitterButton.style.zIndex = '10000';
-    document.body.removeChild(article);
+    document.body.removeChild(core);
     headerText.removeChild(staticLine);
     aside.style.width = "100%";
     setSubHeadline(5);
@@ -150,7 +150,7 @@ function onColorSquaresClick(callback) {
 }
 
 function rainbowClick() {
-  if (!broken && variation != 0) {
+  if (!broken && variation !== 0) {
     setDefaultState();
     window.scrollTo(0, 0);
   }
