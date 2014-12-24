@@ -16,7 +16,7 @@ a {
 }
 
 header,
-article#core {
+div#core {
   width:92%;
 }
 
@@ -55,7 +55,7 @@ header #header-text {
 
 header span#logo {
   font-size:91px;
-  color: #F5F5C4;
+  color: #FFC;
   font-family: Open Sans ;
 }
 
@@ -66,38 +66,38 @@ header img#logo-image {
   bottom:50px;
 }
 
-article#core {
+div#core {
   display:inline-block;
   margin: 27px 0;
   position:relative;
   border-top:1px solid white;
 }
 
-article#core span.headline {
+div#core span.headline {
   font-size:25px;
   padding:11px 0px;
   display:block;
 }
 
-article#core div,
-article#core pre {
+div#core div,
+div#core pre {
   padding:7px;
   border:3px solid black;
   border-radius:4px;
 }
 
-article#core pre {
+div#core pre {
   background-color:#254061;
   margin:0;
   font-size:23px;
   overflow:auto;
 }
 
-article#core pre.code {
+div#core pre.code {
   padding:23px;
 }
 
-article#core div.tips {
+div#core div.tips {
   background:rgba(204, 204, 204, 0.7) url("../img/infos.png") no-repeat 99.9% 1px;
   margin:3px 0;
   font-size:17px;
@@ -105,16 +105,16 @@ article#core div.tips {
   padding-right:33px;
 }
 
-article#core #more-infos,
-article#core #more-infos div#more-infos-links {
+div#core #more-infos,
+div#core #more-infos div#more-infos-links {
   border:none;
 }
 
-article#core span#more-infos-headline {
+div#core span#more-infos-headline {
   border-bottom:1px solid white
 }
 
-article#core div#more-infos-links a {
+div#core div#more-infos-links a {
   display:block;
   color:#FFF;
   font-size:23px;
@@ -122,7 +122,7 @@ article#core div#more-infos-links a {
   margin-bottom:7px;
 }
 
-article#core div#more-infos-links {
+div#core div#more-infos-links {
   margin-top:17px;
 }
 
@@ -184,7 +184,7 @@ aside#colors div.color-square.odd {
 
 @media (min-width: 960px) {
   header,
-  article#core {
+  div#core {
     width:70%;
   }
   header img#click-here {

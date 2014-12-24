@@ -13,7 +13,7 @@ var broken = false;
 
 var subHeadline = [
   'Turn your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets into <strong>success</strong>ful design integrations.',
-  'Build your websites with succss, success guaranteed.',
+  'Build your websites with SUCCSS, success guaranteed.',
   'Bring some <strong>fun</strong> to your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets :)',
   'Try SUCCSS, it doesn\'t mean you SUC(Kat)CSS ;)',
   'SUCCSS, you\'ll still need to fix what is broken.',
@@ -86,6 +86,7 @@ window.onload = function() {
     location.search = getParams();
   });
   setSubHeadline(defaultHeadline);
+  params.page ? setPage(params.page) : setPage('home');
   setTwitterShare();
 }
 
@@ -189,4 +190,11 @@ function setTwitterShare() {
   var twitterButton = document.getElementById('twitter-button');
   var url = document.URL.replace(/(\?.*)/, '') + getParams();
   twitterButton.href = twitterUrl + 'text='+encodeURIComponent(subHeadline[currentHeadline].replace(/(<([^>]+)>)/ig,""))+"&url="+url;
+}
+
+function setPage(pageName) {
+  var pages = document.getElementsByTagName('article');
+  for (var p=0;p<pages.length;p++) {pages[p].style.display='none';}
+  var page = document.getElementById(pageName);
+  page.style.display = 'block';
 }
