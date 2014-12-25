@@ -74,9 +74,13 @@ div#core {
   border-top:1px solid white;
 }
 
+div#core article h1 {
+  font-size: 30px;
+}
+
 div#core span.headline {
   font-size:25px;
-  padding:11px 0px;
+  padding:18px 0px 7px;
   display:block;
 }
 

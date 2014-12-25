@@ -7,7 +7,7 @@ if (params.bgColor) params.bgColor = "#" + params.bgColor;
 var originalBackgroundColor = params.bgColor || document.body.style.backgroundColor;
 document.body.style.backgroundColor=originalBackgroundColor;
 var variation = baseVariation = parseInt(params.variation) || 0;
-var mvtInterval = parseInt(params.speed) || 500;
+isNaN(parseInt(params.speed)) ? speed = 500 : speed = parseInt(params.speed);
 var breakage = parseInt(params.breakage) || 50;
 var broken = false;
 
@@ -123,7 +123,7 @@ function moveSideBar() {
     aside.style.width = "100%";
     setSubHeadline(5);
   }
-  window.setTimeout(function() {moveSideBar();}, mvtInterval);
+  window.setTimeout(function() {moveSideBar();}, speed);
   return startY;
 }
 
@@ -162,7 +162,7 @@ function rainbowClick() {
       aside = document.getElementById('colors');
       asideCoords = aside.getBoundingClientRect();
       window.scrollTo(0, asideCoords.top);
-      if (mvtInterval > 21) mvtInterval -= 20;
+      if (speed > 21) speed -= 20;
       randomizeBackground(colorsHex);
       setSubHeadline(Math.floor(Math.random()*subHeadline.length));
     },500);
@@ -180,7 +180,7 @@ function getParams() {
   rgb = decodeURIComponent(document.body.style.backgroundColor.replace(/[#rgba()]/g, '')).split(', ');
   hex = ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
   params.tweakImg ? tweakImgParam = "&tweakImg=true" : tweakImgParam = '';
-  return "?variation="+variation+"&breakage="+breakage+"&speed="+mvtInterval+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+tweakImgParam;
+  return "?variation="+variation+"&breakage="+breakage+"&speed="+speed+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+tweakImgParam;
 }
 
 function setTwitterShare() {
