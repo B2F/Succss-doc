@@ -186,7 +186,7 @@ function getParams() {
 function setTwitterShare() {
   var twitterUrl = 'https://twitter.com/intent/tweet?';
   var twitterButton = document.getElementById('twitter-button');
-  var url = document.URL.replace(/(\?.*)/, '') + getParams();
+  var url = encodeURIComponent(document.URL.replace(/(\?.*)/, '') + getParams());
   twitterButton.href = twitterUrl + 'text='+encodeURIComponent(subHeadline[currentHeadline].replace(/(<([^>]+)>)/ig,""))+"&url="+url;
 }
 
