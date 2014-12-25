@@ -24,7 +24,7 @@
   <a id="fork-on-github" href="https://github.com/you"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
 
   <header>
-    <a href="index.html"><span id="logo">SUCCSS</span></a>
+    <a href="/"><span id="logo">SUCCSS</span></a>
     <img id="logo-image" src="img/arc-logo.png"/><img width="161" id="click-here" src="img/click-here.png"/>
     <div id="header-text">
       <span id="static-line">Succss! Easy to install, easy to use CSS regression testing tool.<br/></span>
@@ -39,44 +39,43 @@
 
       <span class="headline">Grab it:</span>
       <pre>npm install succss</pre>
-      <div class="tips">Succss transparently use <strong>PhantomJS</strong>, <strong>Casperjs</strong> and <strong>Imagediff</strong>
-      npm dependencies to work. Follow this guide if you have trouble with npm.</div>
+      <div class="tips">Succss transparently use <a href="http://phantomjs.org/">PhantomJS</a>, <a href="http://casperjs.org/">Casperjs</a> and <a href="http://humblesoftware.github.io/js-imagediff/">Imagediff</a>
+        npm dependencies to work. Follow <a href="?page=installation&variation=30&breakage=50&speed=100&ygap=-55&bgColor=777&headline=5">this guide</a> if you have trouble with npm.</div>
 
       <span class="headline">Describe your website CSS:</span>
       <pre class="code" style="height:500px;"><code class="language-javascript">// data.js
-  Succss.data = {
-    'SUCCSS selftests': {
-      url:'succss.ifzenelse.net',
-      baseDirectory:'screenshots',
-      'home': {
-        // Key:name Value:CSS selector.
-        captures: {
-          'header':'header',
-          'square1':'#red.color-square',
-          'square2':'#green.color-square',
-          'square3':'#blue.color-square'
-        },
+Succss.data = {
+  'SUCCSS selftests': {
+    url:'succss.ifzenelse.net',
+    baseDirectory:'screenshots',
+    'home': {
+      // Key:name Value:CSS selector.
+      captures: {
+        'header':'header',
+        'square1':'#red.color-square',
+        'square2':'#green.color-square',
+        'square3':'#blue.color-square'
       },
-      viewports: {
-        'classic wide': {
-          width: 1366,
-          height: 768
-        },
-        'mobile': {
-          width: 320,
-          height: 480
-        }
-        ...
+    },
+    viewports: {
+      'classic wide': {
+        width: 1366,
+        height: 768
+      },
+      'mobile': {
+        width: 320,
+        height: 480
+      }
+      ...
   }</code></pre>
 
       <div class="tips">Succss can be used in many ways, for many use cases.
-      Later, you can also read Advanced Configuration.</div>
+        Later, you can also read <a href="?page=configuration&variation=7&breakage=50&speed=5000&ygap=110&bgColor=189&headline=2">Advanced Configuration</a>.</div>
 
       <span class="headline">Take base screenshots:</span>
       <pre><code>succss add data.js</code></pre>
       <div class="tips">The command line tool can additionally take several arguments,
-      such as <strong>filters </strong> and <strong>options</strong>.<br/>
-      Read it all here !</div>
+      such as <a href="?page=commandline&variation=0&breakage=50&speed=100&ygap=-15&bgColor=369&headline=7">filters and options</a>.</div>
 
       <span class="headline">Compare base screenshots to updates:</span>
       <pre><code>succss check data.js</code></pre>
@@ -84,7 +83,7 @@
 
       <span class="headline">See differences or success:</span>
       <pre>img img img</pre>
-      <div class="tips">This page selftests showcase how differences are highlighted. Take a look at the source code if you know javascript.</div>
+      <div class="tips">This page selftests showcase how differences are highlighted. <a href="?page=fork&variation=10&breakage=50&speed=150&ygap=-60&bgColor=f18&headline=6">Take a look at the source code</a> if you know javascript.</div>
 
     </article>
 
@@ -116,18 +115,23 @@
     <article id="fork">
 
       <h1>Fork me !</h1>
+      <iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=fork&size=large"
+  allowtransparency="false" frameborder="0" scrolling="0" width="95" height="30"></iframe>
+      <iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&size=large"
+  allowtransparency="false" frameborder="0" scrolling="0" width="95" height="30"></iframe>
+
     </article>
 
       <div id="more-infos">
         <span class="headline" id="more-infos-headline">Do you want more infos ?</span>
         <div id="more-infos-links">
           <a href="?page=installation&variation=30&breakage=50&speed=100&ygap=-55&bgColor=777&headline=5">.) Installation Troubleshooting</a>
-          <a href="?page=configuration&variation=7&breakage=50&speed=700&ygap=110&bgColor=189&headline=2">.) Advanced Configuration</a>
+          <a href="?page=configuration&variation=7&breakage=50&speed=5000&ygap=110&bgColor=189&headline=2">.) Advanced Configuration</a>
           <a href="?page=commandline&variation=0&breakage=50&speed=100&ygap=-15&bgColor=369&headline=7">.) Master Succss Commandline</a>
           <a href="?page=usecases&variation=5000&breakage=10000&speed=400&ygap=0&bgColor=793&headline=4&tweakImg=true">.) Typical use cases</a>
           <a href="?page=why&variation=10&breakage=100&speed=180&bgColor=088&headline=3">.) Why another CSS regression testing tool ?</a>
-          <a href="?page=fork&variation=10&breakage=50&speed=500&ygap=-60&bgColor=f1b&headline=6">.) Fork me !</a>
-          <a href="index.html?headline=1">--- Back home</a>
+          <a href="?page=fork&variation=10&breakage=50&speed=150&ygap=-60&bgColor=f08&headline=6">.) Fork me !</a>
+          <a href="?headline=1">--- Back home</a>
         </div>
       </div>
 

@@ -110,6 +110,12 @@ div#core div.tips {
   padding-right:33px;
 }
 
+div#core div.tips a {
+  color:black;
+  font-weight:bold;
+  text-decoration:underline;
+}
+
 div#core #more-infos,
 div#core #more-infos div#more-infos-links {
   border:none;
