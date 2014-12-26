@@ -4,8 +4,7 @@ location.search.substr(1).split("&").forEach(function(item) {params[item.split("
 var currentHeadline = defaultHeadline = parseInt(params.headline) || 0;
 var yGap = parseInt(params.ygap) || 9;
 if (params.bgColor) params.bgColor = "#" + params.bgColor;
-var originalBackgroundColor = params.bgColor || document.body.style.backgroundColor;
-document.body.style.backgroundColor=originalBackgroundColor;
+var originalBackgroundColor = params.bgColor || '#56CCF2';
 var variation = baseVariation = parseInt(params.variation) || 0;
 isNaN(parseInt(params.speed)) ? speed = 500 : speed = parseInt(params.speed);
 var breakage = parseInt(params.breakage) || 50;
@@ -180,10 +179,8 @@ function setDefaultState() {
 }
 
 function getParams() {
-  rgb = decodeURIComponent(document.body.style.backgroundColor.replace(/[#rgba()]/g, '')).split(', ');
-  hex = ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
   params.tweakImg ? tweakImgParam = "&tweakImg=true" : tweakImgParam = '';
-  return "?variation="+variation+"&breakage="+breakage+"&speed="+speed+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+tweakImgParam;
+  return "?variation="+variation+"&breakage="+breakage+"&speed="+speed+"&ygap="+yGap+"&bgColor="+originalBackgroundColor.substr(1)+"&headline="+currentHeadline+tweakImgParam;
 }
 
 function setTwitterShare() {
@@ -200,7 +197,7 @@ function setPage(pageName) {
 }
 
 function loadingFix() {
-  var css = 'article, #dynamic-line { display: none;}',
+  var css = 'article, #dynamic-line { display: none;} body {background-color: '+originalBackgroundColor+'}',
       style = document.createElement('style');
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
