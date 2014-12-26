@@ -22,6 +22,8 @@ var subHeadline = [
   'Check your <strong>style</strong> with SUCCSS.'
 ];
 
+loadingFix();
+
 var colors = {
   "red":"#FF0000",
   "red1":"#F54949",
@@ -130,6 +132,7 @@ function moveSideBar() {
 function setSubHeadline(index) {
   dynamicLine = document.getElementById('dynamic-line');
   dynamicLine.innerHTML = subHeadline[index];
+  dynamicLine.style.display = "block";
   currentHeadline = index;
   setTwitterShare();
 }
@@ -191,10 +194,15 @@ function setTwitterShare() {
 }
 
 function setPage(pageName) {
-  var pages = document.getElementsByTagName('article');
-  for (var p=0;p<pages.length;p++) {pages[p].style.display='none';}
   var page = document.getElementById(pageName);
-  page.style.display = 'block';
   var menu = document.getElementById('more-infos');
-  menu.style.display = 'block';
+  if (page) page.style.display = menu.style.display = 'block';
+}
+
+function loadingFix() {
+  var css = 'article, #dynamic-line { display: none;}',
+      style = document.createElement('style');
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(css));
+  document.head.appendChild(style);
 }
