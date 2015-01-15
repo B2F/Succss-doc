@@ -50,6 +50,10 @@ div#core article h1 {
   font-size: 30px;
 }
 
+div#core article h2 {
+  padding-top: 20px;
+}
+
 div#core span.headline {
   font-size:25px;
   padding:18px 0px 7px;
