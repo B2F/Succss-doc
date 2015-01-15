@@ -180,7 +180,10 @@ function setDefaultState() {
 
 function getParams() {
   params.tweakImg ? tweakImgParam = "&tweakImg=true" : tweakImgParam = '';
-  return "?variation="+variation+"&breakage="+breakage+"&speed="+speed+"&ygap="+yGap+"&bgColor="+originalBackgroundColor.substr(1)+"&headline="+currentHeadline+tweakImgParam;
+  styles = window.getComputedStyle(document.body);
+  rgb = decodeURIComponent(styles.backgroundColor.replace(/[#rgba()]/g, '')).split(', ');
+  hex = ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
+  return "?&page="+params.page+"&variation="+variation+"&breakage="+breakage+"&speed="+speed+"&ygap="+yGap+"&bgColor="+hex+"&headline="+currentHeadline+tweakImgParam;
 }
 
 function setTwitterShare() {
