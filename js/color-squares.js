@@ -88,7 +88,7 @@ window.onload = function() {
     location.search = getParams();
   });
   setSubHeadline(defaultHeadline);
-  params.page ? setPage(params.page) : setPage('home');
+  params.page = setPage(params.page);
   setTwitterShare();
 };
 
@@ -194,9 +194,11 @@ function setTwitterShare() {
 }
 
 function setPage(pageName) {
+  if (!pageName) pageName = 'home';
   var page = document.getElementById(pageName);
   var menu = document.getElementById('more-infos');
   if (page) page.style.display = menu.style.display = 'block';
+  return pageName;
 }
 
 function loadingFix() {
