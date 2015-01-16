@@ -114,70 +114,149 @@ Succss.callback = function(capture) {...}
 Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
       <div class="tips">Succss will read the static properties and methods you provide. The callback and diff methods are part of the <a href="customize">custom validation</a> facility.</div>
       
-      <h2>Configuration file structure</h2>
-      <span class="headline">Succss configuration is simple: keyed objects representing webpages with selectors for captures. Optionally a list of viewports.</span>
+      <h2>Succss.pages</h2>
+      <span class="headline">Succss main configuration is simple: keyed objects representing webpages with captures as name:selector.</span>
 
       <pre class="code"><code class="language-javascript">Succss.pages = {
-  // Will output: './screenshots/home--default-viewport.png'
   'homepage': {
-    url:'succss.ifzenelse.net',
-    directory:'screenshots',
+    url:'succss.ifzenelse.net/configuration?bgColor=553',
+    directory:'relative/screenshots/',
     captures: {
         'home':'body',
+        'header':'',
+        'name-it':'div > #iam a.css #selector'
     }
   }
 }
 </code></pre>
-       <div class="tips">Beware that taking body screenshots is a bad practice: while it's quick to do, it is innefficient and error prone. It is however a good start for this guide.</div>
+       <div class="tips">Beware that taking body screenshots is a bad practice: while it's quick to do, it is innefficient and error prone... Which is good to note in this guide.</div>
 
-      <h2>Default configuration options</h2>
-      <span class="headline">The following code snippet, much smaller, outputs the same body screenshot as above, only filenames are different.</span>
-      <pre class="code" style="height:165px;"><code class="language-javascript">Succss.pages = {
-  // Will output: './screenshots/body--default-viewport.png'
-  'home': { url:'succss.ifzenelse.net' }
-}</code></pre>
-      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body", respectively. Note that default viewport is 1366x768.</div>
-
-      <h2>Viewports</h2>
-      Viewports: Any number of objects, setting the browser height and width before capture. Keyed by viewport names of your choice.
-      <pre class="code"><code class="language-javascript">Succss.viewports = {
-    'default':{
-      'width':1366,
-      'height':768
-    }
-  }
-}</code></pre>
-      <h2>Webpages</h2>
-      <span class="headline">Succss javascript configuration file.</span>
-      <pre class="code"><code class="language-javascript">Succss.pages = {
-  // Will output: './screenshots/fork/body--default-viewport.png'
-  'fork': {
-    url:'succss.ifzenelse.net/fork',
-    directory:'screenshots/fork/',
-    captures: {
-        'body':'body',
-    }
-  },
-    ...
-}</code></pre>
-      <div class="tips">Pages captures can be filtered <a href="?page=commandline">with the --pages argument</a>.</div>
+      <div class="tips">While running succss, pages and captures can be filtered <a href="/commandline">with the --pages and --captures arguments</a>.</div>
       <ul>
-        <li>url: Protocol is optionnaly specified, default is "http://" . The website for which you will take screenshots.</li>
-        <li>baseDirectory: the directory were screenshots will be stored, it can be absolute or relative to your current console path.</li>
+        <li><strong>url</strong>: Protocol is optionnaly specified, default is "http://" . The website for which you will take screenshots.</li>
+        <li><strong>directory</strong>: The directory where screenshots will be stored, it can be absolute or relative to your current console path.</li>
+        <li><strong>captures</strong>: If the selector value is not specified, the name will be used ('header' : '' selector is header, that's how DRY it is)</li>
       </ul>
-
-      <h2>Selectors</h2>
-
-      <h2>Custom file naming</h2>
 
       <h2>Before Capture</h2>
 
-      <h2>After Capture</h2>
+      <span class="headline">You may need to automate user interactions <strong>before</strong> capture. Then, you will have to write an object as the capture key's value, this is where is placed the before function.</span>
+      <span class="headline">This way, you can use any suite of action supported by CasperJS, notably <a href="http://docs.casperjs.org/en/latest/modules/casper.html#click">click</a>, <a href="http://docs.casperjs.org/en/latest/modules/casper.html#fill">fill</a> and <a href="http://casperjs.readthedocs.org/en/latest/modules/casper.html#wait">wait</a>.</span>
+
+      <pre class="code"><code class="language-javascript">// Example from selftests/data.js (@see source code)
+Succss.pages = {
+...
+    captures: {
+      'header': {
+        // Selectors can have a hook callback "before" capture.
+        'before': function() {
+            this.click('#logo-image');
+            console.log('... Waiting for color squares reinitialization');
+            this.wait(900);
+        }
+      },</code></pre>
+      <div class="tips">The 'header' key above is actually the capture's name. The selector, while not explicitly set, is deducted from the name. See below for another example with a selector set.</div>
+      <div class="tips"><a href="/fork">Under the hood</a>, capture 'before' function is made with the awesome "call" javascript method, passing the live casper browser instance to your custom capture function. Have a look at the source, it's clean !</div>
+
+      <span class="headline">We can interact further than user input by modifying the DOM. When your interaction alters the Document Object Model, you need to wrap your code inside a casper evaluate() function.</span>
+      <pre class="code"><code class="language-javascript">// Example from selftests/data.js (@see source code)
+Succss.pages = {
+...
+    captures: {
+      'header-mod': {
+        'selector': 'header',
+        before: function() {
+          this.evaluate(function() {
+            var header = document.getElementsByTagName('header');
+            var clickImage = document.getElementById('click-here');
+            header[0].removeChild(clickImage);
+          });
+        }</code></pre>
+      <div class="tips">The evaluate function acts on behalf of the client's browser javascript, whereas the code outside is only user input.</div>
+
+      <span class="headline">If you want to reuse "before" steps on the same page, you can use the first parameter passed to the before function:</span>
+      <pre class="code"><code class="language-javascript">        before: function(before) {
+          before.header();
+          before['header-mod']();
+        }</code></pre>
+      <div class="tips">The reused before method name will be one of a previous capture on the same page. Be careful not to loop callbacks with this...</div>
+
+      <h2>Succss.viewports</h2>
+      <span class="headline">Any number of viewports objects with height and width properties, setting the browser height and width before each capture is done. Keyed by viewport names of your choice.</span>
+      <pre class="code"><code class="language-javascript">Succss.viewports = {
+ 'wide':
+  {
+    'width':1920,
+    'height':1200
+  },
+  'mobile-landscape':
+  {
+    'width':640,
+    'height':480
+  }
+}</code></pre>
+      <div class="tips">Pages and captures can be filtered, likewise viewports have their <a href="/commandline"> --viewports argument</a>.</div>
+
+      <h2>Succss.setFileName</h2>
+      <span class="headline">You can choose the logic behind file naming done in a configuration file, just override the Succss.setFileName function.</span>
+      <pre class="code"><code class="language-javascript">Succss.setFileName = function(capture) {
+  // Will output something along these lines: "homepage--header--1920x1200.png"
+  return capture.page.name + '--' + capture.name + '--' + capture.viewport.width + 'x' + capture.viewport.height + '.png';
+};
+</code></pre>
+      <span class="headline">Following properties are available through the capture Object parameter:</span>
+      <ul>
+        <li><strong>capture</strong>: name, selector, directory, callback</li>
+        <li><strong>capture.page</strong>: name, url, directory</li>
+        <li><strong>capture.viewport</strong>: name, width, height</li>
+        <li><strong>capture.options</strong>: any option given to the commandline</li>
+        <li><strong>capture.count</strong>: planned, remaining, failures, startTime</li>
+      </ul>
+      <div class="tips">Properties of capture.count, namely planned and remaining captures, current failures number and startTime are part of the <a href="customize">custom validation</a> facility.</div>
+
+      <h2>Default configuration options</h2>
+      <span class="headline">Above, we have seen how to take advantage of Succss advanced options, it doesn't mean you have to !</span>
+      <span class="headline">The following code snippet, much smaller, outputs a simple body screenshot.</span>
+      <pre class="code" style="height:165px;"><code class="language-javascript">Succss.pages = {
+  // Will output: './screenshots/body--default-viewport.png'
+  'home': { url:'succss.ifzenelse.net/configuration?bgColor=553' }
+}</code></pre>
+      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body", respectively. Note that default viewport is 1366x768.</div>
+
+      <span class="headline">From the previous snippet, the following default configuration is assumed:</span>
+      <pre class="code"><code class="language-javascript">Succss.pages = {
+  'home': {
+    url:'succss.ifzenelse.net/configuration?bgColor=110',
+    directory:'./screenshots',
+    captures: { 'body':'' }
+  }
+}
+
+Succss.viewports = {
+ 'default': { 'width'1366,'height'768 }
+}
+
+Succss.setFileName = function(capture) {
+  return capture.name + '--' + capture.viewport.name + '-viewport.png';
+}</code></pre>
+
+      <h2>Variables</h2>
+      <span class="headline">Last but not least, you can avoid repetition with variables.</span>
+      <span class="headline">e.g.</span>
+      <pre class="code"><code class="language-javascript">var baseUrl = 'succss.ifzenelse.net';
+
+Succss.pages = {
+  'home': { url:baseUrl }
+  'page1': { url:baseUrl + '/page1' }
+  'page2': { url:baseUrl + '/page2' }
+  'pageN': { url:baseUrl + '/pageN' }
+}</code></pre>
+      <div class="tips">Reminder: the Succss configuration is a javascript file.</div>
 
       <h2>Conclusion</h2>
-      Succss configuration is really flexible and powerful, yet simple.</br>
-      Now, if you want to launch base updates for specific pages, captures or viewports, I wrote commandline filters just for this.
-      Read <a href="/commandline">next page</a> to learn how to do it !
+      <span class="headline">Succss configuration is really flexible and powerful, yet simple.</br>
+      If you want more examples, skip to <a href="/fork">the source</a> to read the configuration files inside the selftests/ directory.</span>
+
     </article>
 
     <article id="commandline">
@@ -227,14 +306,14 @@ phantomcss.waitForTests();</code></pre>
       <span class="headline">It's worth to mention that the company supporting both PhantomCSS and <strong>ResembleJS</strong> research and development is <a href="http://www.huddle.com/home/">Huddle</a>. Credits to them for pioneering the CSS Regression tools.</span>
      
       <h2>Why Succss over <a href="https://garris.github.io/BackstopJS">BackstopJS</a> ?</h2>
-      <span class="headline">First, I started Succss development around when BackstopJS came out, so I may not have done it if it came out sooner.</span>
+      <span class="headline">First, I started Succss development shortly before BackstopJS came out, so I may not have done it if it came out sooner.</span>
     <span class="headline">BackstopJS rely heavily on Gulp and its commandline, now what is gulp ?</span>
-    <span class="headline">If you don't know what it is or don't want to get yet another dependency 
+    <span class="headline">If you don't know what it is or don't want to get yet something else 
     for just that one specific task (CSS regression testing), that may be anoying.</span>
     <span class="headline">At the time of writing, BackstopJS uses json files (syntactically rigid) as its data configuration,
     whereas Succss uses javascript files. The later can take advantage of variables (for DRY sake) 
     and give you access to callbacks before and after taking screenshots (for both base and updates).</span>
-    <span class="headline">Also, BackstopJS has a per project Bower library (Gulp and Casperjs dependencies are not resolved with Bower), whereas Succss is a npm global. I wouldn't call it quick to get if you never used Bower and Guld before.</span>
+    <span class="headline">Also, BackstopJS has a per project Bower library (Gulp and Casperjs dependencies are not resolved with Bower), whereas Succss is a npm global. I wouldn't call it quick to get if you never used Bower and Gulp before.</span>
     <span class="headline">BackstopJS make it clear that it is "basically a wrapper around the very fabulous Resemble.js", therefore not compatible with <a href="https://github.com/HumbleSoftware/js-imagediff">imagediff</a> .</span>
 
     <h2>Why Succss over <a href="https://github.com/cburgmer/csscritic">CSS Critic</a> ?</h2>
@@ -274,7 +353,7 @@ give it a try !</span>
           <a href="/commandline">.) Master Succss Commandline</a>
           <a href="/customize">.) Custom Validations</a>
           <a href="/why">.) Why another CSS regression testing tool ?</a>
-          <a href="/fork">.) Fork Succss !</a>
+          <a href="/fork">.) Succss at its source !</a>
           <a href="/index.html">--- Back home</a>
         </div>
       </div>
