@@ -28,7 +28,7 @@
   <a id="fork-on-github" href="https://github.com/you"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
 
   <header>
-    <a href="/index.html"><span id="logo">SUCCSS</span></a>
+    <a href="/index.html" title="home"><span id="logo">SUCCSS</span></a>
     <img id="logo-image" src="img/arc-logo.png"/><img width="161" id="click-here" src="img/click-here.png"/>
     <div id="header-text">
       <span id="static-line">Succss! Easy to install, easy to use CSS regression testing tool.<br/></span>
@@ -47,7 +47,7 @@
 
       <span class="headline">Describe your website CSS:</span>
       <pre class="code" style="height:500px;"><code class="language-javascript">//data.js
-Succss.data = {
+Succss.pages = {
   'any webpage': {
     url:'succss.ifzenelse.net',
     directory:'screenshots',
@@ -59,8 +59,12 @@ Succss.data = {
       'square3':'#blue.color-square'
     },
   },
-  'another one': { ... },
-  viewports: {
+  'another one': { 
+    ... 
+  }
+};
+
+Succss.viewports: {
     'classic wide': {
       width: 1366,
       height: 768
@@ -86,7 +90,7 @@ Succss.data = {
 
       <span class="headline">See differences or success:</span>
       <pre><img src="img/screenshots/imagediff.jpeg"/></pre>
-      <div class="tips">This page selftests showcase how differences are highlighted. <a href="/fork">Take a look at the source code</a> if you know javascript.</div>
+      <div class="tips">This page from selftests showcase how differences are highlighted. <a href="/fork">Take a look at the source code</a> if you know javascript.</div>
 
     </article>
 
@@ -99,16 +103,21 @@ Succss.data = {
 
       <h1>Advanced Configuration</h1>
 
-      <span class="headline">From the example on the frontpage, you should already know that the <a href="?page=commandline">succss commandline tool</a> takes <strong>one javascript</strong> file as argument for capturing base screenshots and checking updates for differences with base.</span>
-      <pre class="code"><code class="language-javascript">// data.js (name it what you want)
-Succss.data = {
-...</code></pre>
-      <div class="tips">succss will read the content of the data property of the Succss class, which is automatically instantiated before the configuration file is read.</div>
+      <span class="headline">From the example on the frontpage, you should already know that the <a href="/commandline">succss commandline tool</a> takes <strong>one javascript</strong> file as argument for capturing base screenshots and checking updates for differences with base.</span>
+      <pre class="code"><code class="language-javascript">// From data.js (name it what you want)
+/* Mandatory */
+Succss.pages = {...}
+/* Optionnally: */
+Succss.viewports = {...}
+Succss.setFileName = function(capture) {...}
+Succss.callback = function(capture) {...}
+Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
+      <div class="tips">Succss will read the static properties and methods you provide. The callback and diff methods are part of the <a href="customize">custom validation</a> facility.</div>
       
       <h2>Configuration file structure</h2>
       <span class="headline">Succss configuration is simple: keyed objects representing webpages with selectors for captures. Optionally a list of viewports.</span>
 
-      <pre class="code"><code class="language-javascript">Succss.data = {
+      <pre class="code"><code class="language-javascript">Succss.pages = {
   // Will output: './screenshots/home--default-viewport.png'
   'homepage': {
     url:'succss.ifzenelse.net',
@@ -116,44 +125,31 @@ Succss.data = {
     captures: {
         'home':'body',
     }
-  },
-  viewports : {
+  }
+}
+</code></pre>
+       <div class="tips">Beware that taking body screenshots is a bad practice: while it's quick to do, it is innefficient and error prone. It is however a good start for this guide.</div>
+
+      <h2>Default configuration options</h2>
+      <span class="headline">The following code snippet, much smaller, outputs the same body screenshot as above, only filenames are different.</span>
+      <pre class="code" style="height:165px;"><code class="language-javascript">Succss.pages = {
+  // Will output: './screenshots/body--default-viewport.png'
+  'home': { url:'succss.ifzenelse.net' }
+}</code></pre>
+      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body", respectively. Note that default viewport is 1366x768.</div>
+
+      <h2>Viewports</h2>
+      Viewports: Any number of objects, setting the browser height and width before capture. Keyed by viewport names of your choice.
+      <pre class="code"><code class="language-javascript">Succss.viewports = {
     'default':{
       'width':1366,
       'height':768
     }
   }
 }</code></pre>
-       <div class="tips">Beware that taking body screenshots is a bad practice: while it's quick to do, it is innefficient and error prone. It is however a good start for this guide.</div>
-
-      <h2>Default configuration options</h2>
-      <span class="headline">The following code snippet, much smaller, outputs the same body screenshot as above, only filenames are different.</span>
-      <pre class="code" style="height:165px;"><code class="language-javascript">Succss.data = {
-  // Will output: './screenshots/body--default-viewport.png'
-  'home': {
-    url:'succss.ifzenelse.net',
-    // Default values:
-    //    directory:'screenshots',
-    //    captures: {
-    //        'body':'body',
-    //    }
-    //  },
-    //  viewports : {
-    //    'default':{
-    //      'width':1366,
-    //      'height':768
-    //    }
-    //  }
-  }
-}</code></pre>
-      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body", respectively. Note that default viewport is 1366x768.</div>
-
-      <h2>Viewports</h2>
-      Viewports: Any number of objects, setting the browser height and width before capture. Keyed by viewport names of your choice.
-
       <h2>Webpages</h2>
       <span class="headline">Succss javascript configuration file.</span>
-      <pre class="code"><code class="language-javascript">Succss.data = {
+      <pre class="code"><code class="language-javascript">Succss.pages = {
   // Will output: './screenshots/fork/body--default-viewport.png'
   'fork': {
     url:'succss.ifzenelse.net/fork',
