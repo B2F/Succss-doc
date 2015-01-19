@@ -463,8 +463,114 @@ give it a try !</span>
     <article id="customize">
 
      <h1>Custom validations</h1>
-      
-    </article>    
+
+     <h2 id="callback">After capture (Succss.callback)</h2>
+     <span class="headline">Beyond checking if base and update screenshots match, you can add custom assertions after each capture is taken. The optionnal Succss.callback function in your configuration file serve this purpose.</span>
+     <span class="headline">In the following example, an error is thrown if capture and base match, unless a custom --good option is passed to the commandline (notice capture.options.good):</span>
+     <pre class="code"><code class="language-javascript">// This function will be called after each screenshot is taken.
+Succss.callback = function(capture) {
+
+  if (capture.action == 'check') {
+
+    casper.test.assertTruthy(fs.exists(capture.filePath), 'The updated capture was taken (' + capture.filePath + ').');
+    if (!capture.options.good) {
+      casper.test.assertNotEquals(fs.size(capture.filePath), fs.size(capture.basePath), 'Base and update are different in size.');
+    }
+  }
+}</code></pre>
+    <div class="tips">The code snippet above is actually inspired from succss source, where image differences are triggered (<a href="/fork">@see selftests/data-diff.js</a>).</div>
+    <div class="tips">The <a>capture</a> parameter, <a>casper.test</a> and <a>fs</a> are all explained below.</div>
+    <span class="headline">The above example is inverting the default checking behavior, it will fail if no difference is found. To reactivate the default assertion with the above, you would do:</span>
+    <pre>succss check your-conf.js --good</pre>
+
+    <h2 id="capture">The capture parameter</h2>
+    <span class="headline">The capture object is similar to the one available in <a href="/configuration#filename">Succss.setFileName</a>:</span>
+    <ul>
+      <li><strong>capture</strong>: name, selector, directory, callback</li>
+      <li><strong>capture.page</strong>: name, url, directory</li>
+      <li><strong>capture.viewport</strong>: name, width, height</li>
+      <li><strong>capture.options</strong>: any <a href="/commandline#options">Succss.options</a> or one given to the commandline</li>
+      <li><strong>capture.count</strong>: planned, remaining, failures, startTime</li>
+    </ul>
+    <div class="tips">capture.count properties are especially useful when errors are thrown. Also, SuccssDataCommon.assertSuiteSuccess from <a href="/fork">selftests/data.class.js</a> is a good example.</div>
+    <span class="headline">With these extra parameters:</span>
+    <ul>
+      <li><strong>capture.file</strong>: the filename as per Succss.setFileName</li>
+      <li><strong>capture.basePath</strong>: the path of base screenshot (the one created with "succss add")</li>
+      <li><strong>capture.filePath</strong>: the path of the current screenshot capture (same as basePath on a "succss add" run).</li>
+      <li><strong>capture.action</strong>: the current succss command, either 'add' or 'check'.</li>
+    </ul>
+    <div class="tips">Filename and succss command are not set when Succss.setFileName is called, hence the unavailability of the extras parameters.</div>
+
+    <h2 id="diff">Custom diff (Succss.diff)</h2>
+    <span class="headline">Maybe you noticed that while <strong>Succss.callback</strong> is used to add assertions, it doesn't change nor remove assertions from the diff method.</span>
+    <span class="headline">The <strong>Succss.diff</strong> function is called at the end of "succss check" run. Base and updated html images, as well as the full capture object are loaded as parameters.</span>
+    <span class="headline">Following the preceding Succss.callback example, here is a Succss.diff function written to change the diffing assertion.</span>
+    <pre class="code"><code class="language-javascript">/*
+ * Overrides the default imagediff function, changing imgDiffPath and assertion.
+ */
+Succss.diff = function(imgBase, imgCheck, capture) {
+
+    phantom.injectJs('lib/imagediff.js');
+
+    imgDiff = imagediff.diff(imgBase, imgCheck);
+    var imagesMatch = imagediff.equal(imgBase, imgCheck, capture.options.tolerancePixels);
+
+    if (!imagesMatch) {
+      var filePath = capture.filePath.replace('.succss-tmp/', './selftests/diff-screenshots/');
+      this.writeImgDiff(imgDiff, imgBase, imgCheck, filePath);
+    }
+
+    casper.test.assertFalse(imagesMatch, 'Capture is different to base screenshot (imagediff).');
+}</code></pre>
+    <div class="tips">To remove the default assertion and behavior, you have to set the imagediff option to false. From <a href="/commandline">commandline</a> or <a href="/commandline#options">Succss.options</a>, imagediff, resemble and diff are available options.</div>
+
+    <span class="headline">Here, "this" is a reference to the succss.js module's object. It has the three following methods of interest:</span>
+    <ul>
+      <li><strong>this.imagediff(imgBase, imgUpdate, capture)</strong>: calls the default imagediff implementation (do not confound Succss this.imagediff and the above imagediff function from lib/imagediff.js).</li>
+      <li><strong>this.resemble(imgBase, imgUpdate, capture)</strong>: calls the bundled resemble implementation.</li>
+      <li><strong>this.writeImgDiff(imgDiff, imgBase, imgCheck, filePath)</strong>: the writeImgDiff function creates a <a href="index.html#differences">HTML canvas</a> with the three html images arguments provided and write the resulting file to the filePath location.</li>
+    </ul>
+    <div class="tips">If you understood correctly, you guessed that both this.imagediff and this.resemble call this.writeImgDiff internally (<a href="/fork">@see succss.js</a>).</div>
+    <span class="headline" id="resemble">The next Succss.diff example is extending <a href="https://github.com/Huddle/Resemble.js">ResembleJS</a> default settings:</span>
+    <pre class="code"><code class="language-javascript">Succss.diff = function(imgBase, imgCheck, capture) {
+
+    phantom.injectJs('lib/resemble.js');
+
+    resemble.outputSettings({
+      errorColor: {
+        red: 255,
+        green: 0,
+        blue: 255
+      },
+      errorType: 'movement',
+      transparency: 0.3,
+      largeImageThreshold: 1200
+    });
+
+    this.resemble(imgBase, imgCheck, capture);
+
+};</code></pre>
+    <div class="tips">The <strong>phantom.injectJs</strong> path is relative to your succss-bridge.js directory (most likely somewhere close to your node_modules). It means you will always have access to lib/resemblejs and lib/imagediff without adding them manually. You can specify a path relative to the console directory by prefixing it with fs.workingDirectory + '/...'</div>
+
+      <h2 id="tools">Available objects</h2>
+      <span class="headline">To take advantage of PhantomJS and CasperJS modules available in Succss, take a look at their documentations:</span>
+      <ul>
+        <li><strong>phantom</strong>: the <a href="http://phantomjs.org/api/phantom/">phantom Object</a> from PhantomJS</li>
+        <li><strong>fs</strong>: the <a href="http://phantomjs.org/api/fs/">File System Module</a> from PhantomJS</li>
+        <li><strong>colorizer</strong>: the <a href="http://casperjs.readthedocs.org/en/latest/modules/colorizer.html">colorizer module</a> from CasperJS</li>
+        <li><strong>utils</strong>: the <a href="http://casperjs.readthedocs.org/en/latest/modules/utils.html">utils module</a> from CasperJS</li>
+        <li><strong>casper.test</strong>: the <a href="http://casperjs.readthedocs.org/en/latest/modules/tester.html">tester module</a> from CasperJS</li>
+    </ul>
+    <div class="tips">You can use Succss this.echo(message, type) shortcut to print console logs with the CasperJS colorizer module.</div>
+
+    <h2 id="reuse">Custom validations reuse</h2>
+    <span class="headline">You can reuse your own validation logic across configuration files. To include javascript files, do the following:</span>
+    <pre class="code"><code class="language-javascript">phantom.injectJs(fs.workingDirectory + '/selftests/data.class.js');</code></pre>
+    <div class="tips">The selftests/data.class.js file is a set of common functions used across Succss selftests</div>
+    <div class="tips">The javascript file injection can be used to factor any part of a configuration file, not only the validation process but also for Succss.pages.</div>
+
+    </article>
 
     <article id="fork">
 
