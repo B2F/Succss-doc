@@ -14,11 +14,12 @@ var subHeadline = [
   'Turn your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets into <strong>success</strong>ful design integrations.',
   'Build your websites with SUCCSS, success guaranteed.',
   'Bring some <strong>fun</strong> to your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets :)',
+  'How sweet is using Succss? As eating a #f16 candy !',
   'Try SUCCSS, it doesn\'t mean you SUC(Kat)CSS ;)',
   'SUCCSS, you\'ll still need to fix what is broken.',
-  'SUCCSS.ifzenelse.net, it\'s not easter yet did you find all the "eggs"?',
   'Fork SUCCSS, look under the hood.',
-  'Check your <strong>style</strong> with SUCCSS.'
+  'Check your <strong>style</strong> with SUCCSS.',
+  'SUCCSS.ifzenelse.net, it\'s not easter yet did you find all the "eggs"?'
 ];
 
 loadingFix();
