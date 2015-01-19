@@ -80,6 +80,7 @@ window.onload = function() {
   aside.appendChild(whyLink);
   onColorSquaresClick(function(e) {
     document.body.style.background = colors[e.target.id];
+    getFooter().style.backgroundColor = 'rgba(' + hexToRgb(colors[e.target.id]) + ', 0.7)';
     setTwitterShare();
   });
   imgLogo = document.getElementById('logo-image');
@@ -143,7 +144,9 @@ function randomizePos(pos, variation) {
 }
 
 function randomizeBackground(colors) {
-  document.body.style.backgroundColor = colors[Math.floor(Math.random()*(colors.length-1))];
+  colorPicked = colors[Math.floor(Math.random()*(colors.length-1))];
+  document.body.style.backgroundColor = colorPicked;
+  getFooter().style.backgroundColor = 'rgba(' + hexToRgb(colorPicked) + ', 0.7)';
 }
 
 function onColorSquaresClick(callback) {
@@ -175,6 +178,7 @@ function rainbowClick() {
 function setDefaultState() {
   variation = 0;
   document.body.style.backgroundColor = originalBackgroundColor;
+  getFooter().style.backgroundColor = 'rgba(' + hexToRgb(originalBackgroundColor) + ', 0.7)';
   setSubHeadline(defaultHeadline);
   setTwitterShare();
 }
@@ -195,17 +199,31 @@ function setTwitterShare() {
 }
 
 function setPage(pageName) {
-  if (!pageName) pageName = 'home';
+  if (!pageName || pageName == "undefined") pageName = 'home';
   var page = document.getElementById(pageName);
   var menu = document.getElementById('more-infos');
   if (page) page.style.display = menu.style.display = 'block';
+  title = page.getElementsByTagName('h1');
+  document.title = title[0].innerHTML + ' - ' + document.title;
   return pageName;
 }
 
 function loadingFix() {
-  var css = 'article, #dynamic-line { display: none;} body {background-color: '+originalBackgroundColor+'}',
+  var css = 'article, #dynamic-line { display: none;} body {background-color: '+originalBackgroundColor+'} footer {background-color: rgba(' + hexToRgb(originalBackgroundColor)+ ', 0.7)}',
       style = document.createElement('style');
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
+}
+
+function getFooter() {
+  return document.getElementById('supporters');
+}
+
+function hexToRgb(hex) {
+    var hex = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    var r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return r ? parseInt(r[1], 16) + ',' + parseInt(r[2], 16) + ',' + parseInt(r[3], 16) : null;
 }
