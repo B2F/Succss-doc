@@ -97,6 +97,32 @@ Succss.viewports: {
     <article id="installation">
 
       <h1>Installation Troubleshooting</h1>
+
+      <h2>Requirements</h2>
+      <span class="headline">There is only two simple requirements to get Succss and to run it.</span>
+      <ul>
+        <li>1. how to get Succss ? <strong><a href="https://www.npmjs.com/">npm</a></strong> </li>
+        <li>2. how to run it ? <strong><a href="https://www.python.org/">python</a></strong></li>
+      </ul>
+      <div class="tips">You could checkout the Succss git repository, symlink it's binary to your system and have CasperJS installed separately, but well... who would do that ?</div>
+
+      <h2>npm</h2>
+      <span class="headline">Npmjs is a neat package manager for nodejs and other javascript tools and libraries. </span>
+      <span class="headline">Most Linux distributions have a prepackaged npm binary. Follow <a href="https://github.com/nodesource/distributions">these instructions</a> if you need help.</span>
+      <span class="headline">On Mac OSX, do:</span>
+      <pre>brew install node</pre>
+      <span class="headline">Do not forget the important part (run it as root):</span>
+      <pre>npm -g install succss</pre>
+      <div class="tips">Actually, if you are a developer, you can checkout the most recent succss branch and symlink it with the "npm link" command.</div>
+
+      <h2>Python</h2>
+      <span class="headline">Python is bundled with Mac OSX and a lot of Linux distributions too. To verify if it is already installed, open your favorite shell and type this:</span>
+      <pre>python --version</pre>
+      <div class="tips">Succss has been tested with python versions 2.7.8 and 3.4.1, it should work with anything in between.</div>
+
+      <h2>Windows</h2>
+      <span class="headline">Argh... Windows. I used to play video games on Windows, I mean, I still do from time to time. Anyway, Windows is not officially supported but theoretically it could work.</span>
+      <span class="headline">First, try to get <a href="http://nodejs.org/download/">npm</a> (from nodejs), <a href="https://www.python.org/downloads/windows/">python</a> and <a href="http://casperjs.readthedocs.org/en/latest/installation.html#casperjs-on-windows">casperjs</a> working on Windows, then Succss, you may have it !</span>
     </article>
 
     <article id="configuration">
