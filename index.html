@@ -399,6 +399,9 @@ Succss.options = {
     </article>
 
     <article id="why">
+      |------- ------------------------------------------------------------------------------------<br/>
+      |------- &nbsp;&nbsp;&nbsp;Written by B2F, on 16 January 2015.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+      |------- ------------------------------------------------------------------------------------<br/>
 
       <h1>Why another CSS regression testing tool ?</h1>
 
@@ -429,9 +432,9 @@ phantomcss.compareFiles(baseFile, diffFile);
 phantomcss.waitForTests();</code></pre>
       <div class="tips">Methods for comparing screenshots.</div>
       <span class="headline">Before understanding PhantomCSS, one must know how to use casperjs (mind your learning curve), and then choose his/her complete workflow made of potentially asynchronous calls for opening webpages (for beginners, it can quickly become a mess, difficult to read and debug). </span>
-      <span class="headline">PhantomCSS is a casperjs module. CasperJS beeing a web scraping, functionnal testing tool, it makes sense. However, Succss is a command line tool built *on top* of casperjs, thus abstracting it to the user.</span>
+      <span class="headline">PhantomCSS is a casperjs module. CasperJS beeing a web scraping, functionnal testing tool, it makes sense. However, Succss is a command line tool built *on top* of casperjs, thus abstracting it to the user for the most part.</span>
       <span class="headline">With PhantomCSS, starting almost from scratch ("Compare the images when and how you want" - from its github page), you may duplicate code for each of your captures (add phantomcss.screenshot calls to casperjs requests, you will likely get a verbose source) across test suites if any. You will write different files for captures and diffing, unless you code yet another tool on top of it - that is why I went my own route for Succss.</span>
-      <span class="headline">Also when diffing with Succss, you can not only use ResembleJS but also ImageDiff (the default), or <a href="/customize">anything else you come up with</a>. Conclusion: Succss has all the complex logic and underliying code done for you, and you will still be able to do advanced interactions by <a href="configuration">writing callbacks before captures</a>.</span>
+      <span class="headline">Also when diffing with Succss, you can not only use ResembleJS but also ImageDiff (the default), or <a href="/customize">anything else</a> you come up with. Conclusion: Succss has all the complex logic and underliying code done for you, and you will still be able to do advanced interactions by writing callbacks <a href="configuration#before">before</a> captures.</span>
       <span class="headline">It's worth to mention that the company supporting both PhantomCSS and <strong>ResembleJS</strong> research and development is <a href="http://www.huddle.com/home/">Huddle</a>. Credits to them for pioneering the CSS Regression tools.</span>
      
       <h2>Why Succss over <a href="https://garris.github.io/BackstopJS">BackstopJS</a> ?</h2>
@@ -443,7 +446,7 @@ phantomcss.waitForTests();</code></pre>
     whereas Succss uses javascript files. The later can take advantage of variables (for DRY sake) 
     and give you access to callbacks before and after taking screenshots (for both base and updates).</span>
     <span class="headline">Also, BackstopJS has a per project Bower library (Gulp and Casperjs dependencies are not resolved with Bower), whereas Succss is a npm global. I wouldn't call it quick to get if you never used Bower and Gulp before.</span>
-    <span class="headline">BackstopJS make it clear that it is "basically a wrapper around the very fabulous Resemble.js", therefore not compatible with <a href="https://github.com/HumbleSoftware/js-imagediff">imagediff</a> .</span>
+    <span class="headline">BackstopJS make it clear that it is "basically a wrapper around the very fabulous Resemble.js", therefore not compatible with <a href="commandline#imagediff">imagediff</a> .</span>
 
     <h2>Why Succss over <a href="https://github.com/cburgmer/csscritic">CSS Critic</a> ?</h2>
     <span class="headline">It seems that there is a lot of CSS Regression testing tools getting released these days !</span>
