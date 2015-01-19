@@ -65,32 +65,32 @@ Succss.pages = {
 };
 
 Succss.viewports: {
-    'classic wide': {
-      width: 1366,
-      height: 768
-    },
-    'mobile': {
-      width: 320,
-      height: 480
-    },
-    ...
-  }</code></pre>
+  'classic wide': {
+    width: 1366,
+    height: 768
+  },
+  'mobile': {
+    width: 320,
+    height: 480
+  },
+  ...
+}</code></pre>
 
       <div class="tips">Succss can be used in many ways, for many use cases.
         Later, you can also read <a href="/configuration">Advanced Configuration</a>.</div>
 
       <span class="headline">Take base screenshots:</span>
       <pre><code>succss add data.js</code></pre>
-      <div class="tips">For advanced usage, the command line tool can additionally take several arguments 
-      such as <a href="/commandline">filters and options</a>.</div>
+      <div class="tips">For advanced usage, the command line tool can additionally take several options 
+      such as pages, captures and viewports <a href="/commandline#filters">filters</a>.</div>
 
       <span class="headline">Compare base screenshots to updates:</span>
       <pre><code>succss check data.js</code></pre>
-      <div class="tips">Succss is bundled with imagediff (default) and ResembleJS for comparisons. <a href="customize">You can also fully customize captures validations</a>.</div>
+      <div class="tips">Succss is bundled with imagediff (default) and ResembleJS for comparisons. You can also fully <a href="customize">customize</a> captures validations.</div>
 
-      <span class="headline">See differences or success:</span>
+      <span class="headline" id="differences">See differences or success:</span>
       <pre><img src="img/screenshots/imagediff.jpeg"/></pre>
-      <div class="tips">This page from selftests showcase how differences are highlighted. <a href="/fork">Take a look at the source code</a> if you know javascript.</div>
+      <div class="tips">This image extracted from selftests displays how differences are highlighted by <a href="https://github.com/HumbleSoftware/js-imagediff">Imagediff</a>. Take a look at <a href="/fork">Succss source code</a> if you know javascript.</div>
 
     </article>
 
