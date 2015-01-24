@@ -137,7 +137,7 @@ Succss.viewports = {...}
 Succss.setFileName = function(capture) {...}
 Succss.callback = function(capture) {...}
 Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
-      <div class="tips">Succss will read the static properties and methods you provide. The callback and diff methods are part of the <a href="customize">custom validation</a> facility.</div>
+      <div class="tips">Succss will read the static properties and methods you provide. The callback and diff hook functions are part of the <a href="customize">custom validation</a> facility.</div>
       
       <h2 id="pages">Succss.pages</h2>
       <span class="headline">Succss main configuration is simple: keyed objects representing webpages with captures as name:selector.</span>
@@ -147,9 +147,9 @@ Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
     url:'succss.ifzenelse.net/configuration?bgColor=673',
     directory:'relative/screenshots/',
     captures: {
-        'home':'body',
-        'header':'',
-        'name-it':'div > #iam a.css #selector'
+      'home':'body',
+      'header':'',
+      'name-it':'div > #iam a.css #selector'
     }
   }
 }
@@ -175,9 +175,9 @@ Succss.pages = {
       'header': {
         // Selectors can have a hook callback "before" capture.
         'before': function() {
-            this.click('#logo-image');
-            console.log('... Waiting for color squares reinitialization');
-            this.wait(900);
+          this.click('#logo-image');
+          console.log('... Waiting for color squares reinitialization');
+          this.wait(900);
         }
       },</code></pre>
       <div class="tips">The 'header' key above is actually the capture's name. The selector, while not explicitly set, is deducted from the name. See below for another example with a selector set.</div>
@@ -208,7 +208,7 @@ Succss.pages = {
       <div class="tips">The reused before method name will be one of a previous capture on the same page. Be careful not to loop callbacks with this...</div>
 
       <h2 id="viewports">Succss.viewports</h2>
-      <span class="headline">Any number of viewports objects with height and width properties, setting the browser height and width before each capture is done. Keyed by viewport names of your choice.</span>
+      <span class="headline">Any number of viewports objects with height and width properties, keyed by viewport names of your choice.</span>
       <pre class="code"><code class="language-javascript">Succss.viewports = {
  'wide':
   {
@@ -221,10 +221,10 @@ Succss.pages = {
     'height':480
   }
 }</code></pre>
-      <div class="tips">Pages and captures can be filtered, likewise viewports have their <a href="/commandline#filters"> --viewports option</a>.</div>
+      <div class="tips">Pages and captures can be filtered, likewise viewports have their <a href="/commandline#filters"> --viewports option</a>. If you don't filter viewports, captures will be made for the whole list.</div>
 
       <h2 id="filename">Succss.setFileName</h2>
-      <span class="headline">You can choose the logic behind file naming done in a configuration file, just override the Succss.setFileName function.</span>
+      <span class="headline">You can choose the logic behind file naming done by a configuration file, just override the Succss.setFileName function.</span>
       <pre class="code"><code class="language-javascript">Succss.setFileName = function(capture) {
   // Will output something along these lines: "homepage--header--1920x1200.png"
   return capture.page.name + '--' + capture.name + '--' + capture.viewport.width + 'x' + capture.viewport.height + '.png';
@@ -238,36 +238,45 @@ Succss.pages = {
         <li><strong>capture.options</strong>: any <a href="/commandline#options">Succss.options</a> or one given to the commandline</li>
         <li><strong>capture.count</strong>: planned, remaining, failures, startTime</li>
       </ul>
-      <div class="tips">Properties of capture.count, namely planned and remaining captures, current failures number and startTime are part of the <a href="customize#capture">custom validation</a> facility.</div>
+      <div class="tips">Properties of capture.count, namely planned and remaining captures number, current failures number and the execution start timestamp are part of the <a href="customize#capture">custom validation</a> facility.</div>
 
-      <h2>Default configuration options</h2>
-      <span class="headline">Above, we have seen how to take advantage of Succss advanced options, it doesn't mean you have to !</span>
-      <span class="headline">The following code snippet, much smaller, outputs a simple body screenshot.</span>
-      <pre class="code" style="height:165px;"><code class="language-javascript">Succss.pages = {
-  // Will output: './screenshots/body--default-viewport.png'
-  'home': { url:'succss.ifzenelse.net/configuration?bgColor=088' }
+      <h2 id="default">Default configuration options</h2>
+      <span class="headline">Above, we have seen how to take advantage of Succss advanced configuration, it doesn't mean you have to !</span>
+      <span class="headline">The following small, yet useful code snippet, outputs full pages screenshots.</span>
+      <pre class="code"><code class="language-javascript">// "condensed-conf.js"
+Succss.pages = {
+  // Will output: './screenshots/home--body--default-viewport.png'
+  'home': { url:'succss.ifzenelse.net' },
+  // Will output: './screenshots/home--body--default-viewport.png'
+  'configuration': { url:'succss.ifzenelse.net/configuration?bgColor=088' }
+...
 }</code></pre>
-      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body", respectively. Note that default viewport is 1366x768.</div>
+      <div class="tips">Obviously, webpage url is mandatory while the directory and selector default to "./screenshots" and "body" respectively. Note that default viewport is 1366x768.</div>
 
       <span class="headline">From the previous snippet, the following default configuration is assumed:</span>
       <pre class="code"><code class="language-javascript">Succss.pages = {
   'home': {
-    url:'succss.ifzenelse.net/configuration?bgColor=110',
+    url:'succss.ifzenelse.net',
+    directory:'./screenshots',
+    captures: { 'body':'' }
+  },
+  'configuration': {
+    url:'succss.ifzenelse.net/configuration?bgColor=088',
     directory:'./screenshots',
     captures: { 'body':'' }
   }
 }
 
 Succss.viewports = {
- 'default': { 'width'1366,'height'768 }
+ 'default': { 'width':1366,'height':768 }
 }
 
 Succss.setFileName = function(capture) {
-  return capture.name + '--' + capture.viewport.name + '-viewport.png';
+  return capture.page.name + '--' + capture.name + '--' + capture.viewport.name + '-viewport.png';
 }</code></pre>
 
       <h2 id="variables">Variables</h2>
-      <span class="headline">Last but not least, you can avoid repetition with variables.</span>
+      <span class="headline">DRY (Do not Repeat Yourself). You can avoid repetition with variables.</span>
       <span class="headline">e.g.</span>
       <pre class="code"><code class="language-javascript">var baseUrl = 'succss.ifzenelse.net';
 
@@ -278,6 +287,27 @@ Succss.pages = {
   'pageN': { url:baseUrl + '/customize' }
 }</code></pre>
       <div class="tips">Reminder: the Succss configuration is a javascript file.</div>
+
+      <h2 id="source">The source property</h2>
+      <span class="headline">The way Javascript assign objects is by reference. It means modifications done on a copied object will get reflected on the original object.</span>
+      <span class="headline">To work around this, Succss.pages offers a 'source' attribute to extend another page's properties. For instance:</span>
+      <pre class="code"><code class="language-javascript">Succss.pages = {
+  'installation': {
+    'url': SuccssDataCommon.url+'/installation',
+    'directory':SuccssDataCommon.baseDirectory+'/installation',
+    captures: {
+      'body':'body'
+    },
+  },
+  'configuration': {
+    'url': SuccssDataCommon.url+'/configuration',
+    'directory':SuccssDataCommon.baseDirectory+'/configuration',
+    'source': 'installation'
+  }
+}
+</code></pre>
+      <div class="tips">The 'configuration' page above will change the url and directory but keeps the installation 'captures' properties. You could also share the same directory on both.</div>
+      <div class="tips"><strong>SuccssDataCommon</strong> is a set of convenient values and functions used for Succss internal testing. Check the <a href="/fork">selftests/data.class.js</a> from the source.</div>
 
       <h2>Conclusion</h2>
       <span class="headline">Succss configuration is really flexible and powerful, yet simple.</br>
