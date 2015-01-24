@@ -425,6 +425,98 @@ Succss.options = {
     <article id="usecases">
 
       <h1>Typical use cases</h1>
+
+      <h2>CSS Regression testing</h2>
+      <span class="headline">First and foremost, Succss is a CSS Regression testing tool. It will detect and highlight differences between reference and screenshots update taken from web pages and CSS selectors you specify.</span>
+      <span class="headline">You can run succss either manually, or automatically with Jenkins, Travis and the like.</span>
+      <span class="headline">Expect one of the following messages at the end of a "succss check" run:</span>
+      <pre>Tests failed with ' + SuccssCount.failures + ' errors.</pre>
+      <pre>[SUCCSS] All captures (' + SuccssCount.planned + ') tests pass!</pre>
+      <div class="tips">SuccssCount is used internally to count planned/remaining captures, failures and start time. It is available in the capture object passed as an argument to <a>setFileName</a> and <a>validation</a> functions.</div>
+
+      <h2>Automated design validation</h2>
+      <span class="headline">Succss has an option for you to choose the <a href="/commandline#checkdir">base screenshots directory</a>. At a project start, you can set it to a directory with the design images of pages body or CSS selectors.</span>
+      <div class="tips">Adjust diff precision with the <a href="/commandline#settings">tolerancePixels</a> option for imagediff, or with a <a href="customize#resemble">custom</a> ResembleJS diff function.</div>
+
+      <h2>Webkit / Gecko comparison</h2>
+      <span class="headline">The <a href="/commandline#engine">--engine=Slimerjs</a> commandline option gives the ability to run a Gecko (Firefox) browser to take captures, whereas the default PhantomJS engine is a webkit headless browser. Specify different engines for "succss add" and "succss check" to compare the results. Keep in mind the PhantomJS engine is somewhat limited when it comes to load fonts and/or images on AJAX requests.</span>
+
+      <h2>Visual validation</h2>
+      <span class="headline">Screenshots from your website are written in the directory you choose (<a href="/configuration#default">default</a> is ./screenshots). You can open these images manually and detect obvious anomally just by visualizing them <strong>side to side</strong>, especially to quickly compare viewports rendering on a wide range of resolutions (there is also an automated way for this, read more below).</span>
+
+      <h2>Viewports comparison</h2>
+      <span class="headline">As stated above, you can compare viewports manually by configuring a <a href="/configuration#viewports">list of viewports</a> to take screenshots with. Otherwise, you can write a configuration overwiting viewports list from another, thanks to <a href="/customize#reuse">phantom.injectJs</a> method, then compare the second to the first. In the second configuration file, you will also need to write a custom setFileName function without dynamic viewport properties for screenshots to be compared.</span>
+      <span class="headline">e.g.</span>
+      <pre class="code"><code class="language-javascript">// original-conf.js
+Succss.pages = { ...
+Succss.viewports = {
+  // One or several viewports objects.
+  ...
+  // The viewport your want to check against.
+  'wide' =  {
+    height: 1920,
+    width: 1200
+  }
+}
+// You can keep the default setFileName, which is:
+//Succss.setFileName = function(capture) {
+//  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.name + '-viewport.png';
+//}
+</code></pre>
+<pre class="code"><code class="language-javascript">// second-conf.js
+phantom.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
+// Do not overwrite pages, only viewports and setFileName
+Succss.viewports = {
+  // The list of viewports to check against one viewport from original-conf.js
+  viewportA =  {...}
+  viewportB =  {...}
+  viewportC =  {...}
+}
+Succss.setFileName = function() {
+  // Set a filename similar to the original-conf.js, only freeze the viewport:
+  return captureState.page.name + '--' + captureState.name + '--' + 'wide-viewport.png';
+}
+</code></pre>
+      <span class="headline">With the above, "succss check second-conf.js" will check A,B and C viewports against the 'wide' viewport from original-conf.js.</span>
+      <div class="tips">Succss Imagediff's and ResembleJS's default implementations write diff images in a <a>directory tree</a> starting with the capture start time timestamp, then the checked page and viewport identifier, then the reference's directory tree. The filename will be the reference's one. In short, diff images will never be erased due to improper setFileName usage (while references screenshots can be overwritten) unless you write your <a href="customize#diff">own diff</a> implementation.</div>
+
+      <h2>Pages comparison</h2>
+      <span class="headline">You can extend the preceding viewports checking logic to pages. First, <a href="configuration#source">"source"</a> the pages you want to compare, then freeze the page segment of filenames, like so:</span>
+      <pre class="code"><code class="language-javascript">// original-conf.js
+Succss.pages = {
+  // Original page for comparison.
+  'installation': {
+    'url': SuccssDataCommon.url+'?page=installation&variation=0',
+    captures: {
+      'body':'body'
+    },
+  },
+}
+</code></pre>
+<pre class="code"><code class="language-javascript">// second-conf.js
+phantom.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
+// Do not overwrite pages, only viewports and setFileName
+Succss.pages = {
+  'commandline': {
+    'url': SuccssDataCommon.url+'?page=commandline',
+    'source': 'installation'
+  },
+  'fork': {
+    'url': SuccssDataCommon.url+'?page=fork',
+    'source': 'installation'
+  }
+}
+Succss.setFileName = function() {
+  // We force comparison to the reference 'installation' screenshot regardless of the updated page name:
+  return 'installation' + '--' + captureState.name + '--' + captureState.viewport.name + '-viewport.png';
+}
+</code></pre>
+      <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'commandline' and 'fork' to the 'installation' page body.</span>
+      <div class="tips">You can compare viewports and pages at the same time, just freeze both in the filename. See how it's done in <a href="/fork">selftests/data-compare.js</a>.</div>
+
+      <h2>History versionning</h2>
+      <span class="headline">Plain and simple. With a version management system like Git, keep records of your website design and integration changes through time.</span>
+
     </article>
 
     <article id="why">
