@@ -130,6 +130,33 @@ div#core span#more-infos-headline {
   border-bottom:1px solid white
 }
 
+footer a {
+  font-weight:bold;
+}
+
+footer .headline a {
+  color:white;
+  text-decoration:underline;
+}
+
+footer ul a {
+  color:#FFE;
+  font-family: Open Sans;
+}
+
+footer ul img {
+  width:391px;
+}
+
+footer ul li {
+  list-style-type: none;
+}
+
+footer ul,
+footer span {
+  display:block;
+}
+
 div#core div#more-infos-links a {
   display:block;
   color:#FFF;
