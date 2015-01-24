@@ -552,22 +552,22 @@ phantomcss.getCreatedDiffFiles();
 phantomcss.compareFiles(baseFile, diffFile);
 phantomcss.waitForTests();</code></pre>
       <div class="tips">Methods for comparing screenshots.</div>
-      <span class="headline">Before understanding PhantomCSS, one must know how to use casperjs (mind your learning curve), and then choose his/her complete workflow made of potentially asynchronous calls for opening webpages (for beginners, it can quickly become a mess, difficult to read and debug). </span>
-      <span class="headline">PhantomCSS is a casperjs module. CasperJS beeing a web scraping, functionnal testing tool, it makes sense. However, Succss is a command line tool built *on top* of casperjs, thus abstracting it to the user for the most part.</span>
-      <span class="headline">With PhantomCSS, starting almost from scratch ("Compare the images when and how you want" - from its github page), you may duplicate code for each of your captures (add phantomcss.screenshot calls to casperjs requests, you will likely get a verbose source) across test suites if any. You will write different files for captures and diffing, unless you code yet another tool on top of it - that is why I went my own route for Succss.</span>
-      <span class="headline">Also when diffing with Succss, you can not only use ResembleJS but also ImageDiff (the default), or <a href="/customize">anything else</a> you come up with. Conclusion: Succss has all the complex logic and underliying code done for you, and you will still be able to do advanced interactions by writing callbacks <a href="configuration#before">before</a> captures.</span>
+      <span class="headline">Before starting PhantomCSS, one must know how to use casperjs (mind your learning curve), and then choose his/her complete workflow made of potentially asynchronous calls for opening webpages (for beginners, it can quickly become a mess, difficult to read and debug). </span>
+      <span class="headline">PhantomCSS is a casperjs module. CasperJS beeing a web scraping, functionnal testing tool, it makes sense. However, Succss is a tool built *on top* of casperjs, thus abstracting it to the user for the most part.</span>
+      <span class="headline">With PhantomCSS, starting almost from scratch ("Compare the images when and how you want" - from its github page), you may duplicate code for each of your captures (add phantomcss.screenshot calls to casperjs requests, you will likely get a verbose source) across test suites if any. You will write different files for captures and diffing, unless you add processing logic on top of it - that is why I went my own route for Succss.</span>
+      <span class="headline">Also when diffing with Succss, you can not only use ResembleJS but also ImageDiff (the default), or <a href="/customize#diff">anything else</a> you come up with. Conclusion: Succss has all the complex logic and underliying code done for you, and you will still be able to do advanced interactions by writing callbacks <a href="configuration#before">before</a> captures.</span>
       <span class="headline">It's worth to mention that the company supporting both PhantomCSS and <strong>ResembleJS</strong> research and development is <a href="http://www.huddle.com/home/">Huddle</a>. Credits to them for pioneering the CSS Regression tools.</span>
      
       <h2>Why Succss over <a href="https://garris.github.io/BackstopJS">BackstopJS</a> ?</h2>
       <span class="headline">First, I started Succss development shortly before BackstopJS came out, so I may not have done it if it came out sooner.</span>
     <span class="headline">BackstopJS rely heavily on Gulp and its commandline, now what is gulp ?</span>
     <span class="headline">If you don't know what it is or don't want to get yet something else 
-    for just that one specific task (CSS regression testing), that may be anoying.</span>
+    for just that one specific task (CSS regression testing), that may be annoying.</span>
     <span class="headline">At the time of writing, BackstopJS uses json files (syntactically rigid) as its data configuration,
-    whereas Succss uses javascript files. The later can take advantage of variables (for DRY sake) 
-    and give you access to callbacks before and after taking screenshots (for both base and updates).</span>
+      whereas Succss uses javascript files. The later can take advantage of variables (<a href="/configuration#variables">for DRY sake</a>) 
+    and give you access to callbacks before and <a href="customize#callback">after</a> taking screenshots (either captures from adding references or checking updates).</span>
     <span class="headline">Also, BackstopJS has a per project Bower library (Gulp and Casperjs dependencies are not resolved with Bower), whereas Succss is a npm global. I wouldn't call it quick to get if you never used Bower and Gulp before.</span>
-    <span class="headline">BackstopJS make it clear that it is "basically a wrapper around the very fabulous Resemble.js", therefore not compatible with <a href="commandline#imagediff">imagediff</a> .</span>
+    <span class="headline">BackstopJS make it clear that it is "basically a wrapper around the very fabulous Resemble.js", therefore not compatible with <a href="commandline#diffing">imagediff</a> .</span>
 
     <h2>Why Succss over <a href="https://github.com/cburgmer/csscritic">CSS Critic</a> ?</h2>
     <span class="headline">It seems that there is a lot of CSS Regression testing tools getting released these days !</span>
@@ -576,7 +576,7 @@ phantomcss.waitForTests();</code></pre>
 
     <h2>Succss is complete, with a smooth learning curve.</h2>
     <span class="headline">Succss is a complete CSS regression testing tool having
-    its own command line utility rather than something else ("casperjs test", "gulp"),
+    its own executable rather than something else ("casperjs test", "gulp"),
     it's easy to learn, easy to install and fast to use. If you're into CSS regression testing,
 give it a try !</span>
     </article>
