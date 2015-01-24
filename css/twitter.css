@@ -9,6 +9,7 @@ header a#twitter-button {
   border:1px solid #888;
   border-bottom:none;
   border-radius:3px;
+  padding:3px 3px 0 0;
   width:75px;
 }
 header a#twitter-button i {

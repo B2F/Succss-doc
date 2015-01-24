@@ -25,7 +25,6 @@ div#core,
 footer {
   width:92%;
   position:relative;
-  z-index:10000;
 }
 
 header #header-text {

@@ -118,8 +118,8 @@ function moveSideBar() {
     var staticLine = document.getElementById('static-line');
     var twitterButton = document.getElementById('twitter-button');
     twitterButton.style.position = 'absolute';
-    twitterButton.style.top = '174px';
-    twitterButton.style.left = '23px';
+    twitterButton.style.top = '173px';
+    twitterButton.style.left = '125px';
     twitterButton.style.zIndex = '10000';
     document.body.removeChild(core);
     headerText.removeChild(staticLine);
