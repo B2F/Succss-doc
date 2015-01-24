@@ -317,10 +317,10 @@ Succss.pages = {
 
     <article id="commandline">
 
-      <h1>Master Succss Commandline</h1>
+      <h1>Succss From The CLI (Command Line Interface)</h1>
 
-      <span class="headline">The succss binary is a python script, it will launch casperjs with the succss-bridge.js test file. Then, commandline options are read 
-      and your javascript configuration file is parsed by the succss.js node module containing the core Succss logic.</span>
+      <span class="headline">Succss binary is a python script, it will launch casperjs with the <strong>succss-bridge.js</strong> test file. Then, command-line options are read 
+        and your javascript configuration file is parsed by the <strong>succss.js</strong> PhantomJS module containing the core Succss logic.</span>
       <span class="headline">Read more below for the really interesting stuff.</span>
 
       <h2 id="add">Add it</h2>
@@ -331,21 +331,21 @@ Succss.pages = {
       <h2 id="check">Check it</h2>
       <span class="headline">After some time or by continuous integration, you can launch the check command on the same file, or a slightly different one.</span>
       <pre>succss check your-file.js</pre>
-      <div class="tips">You may want to have a file for adding and another for testing. While this is done to trigger differences in succss selftests/, you will use the same file for most cases.</div>
+      <div class="tips">You may want to have a file for adding and another for testing. While this is done to trigger differences in succss selftests/, just one file is good for most cases.</div>
 
       <h2 id="filters">Filters</h2>
       <span class="headline"><a href="/configuration#pages">Pages</a>, <a href="/configuration#captures">captures</a> and <a href="/configuration#viewports">viewports</a> from the configuration file can be filtered for any succss run.</span>
       <pre>succss add your-conf.js --pages=p1,p2,p3 --captures=c1,c2 --viewports=v1</pre>
       <div class="tips">Filters are applicable on the <strong>check</strong> command as well.</div>
 
-      <h2>Engine</h2>
+      <h2 id="engine">Engine</h2>
       <span class="headline">The default browser engine is the PhantomJS headless browser, which is using Webkit (the chrome and safari engine). To render pages with Gecko, first you must have <a href="http://slimerjs.org/">SlimerJS</a> installed on your computer, then run:</span>
       <pre>succss add your-conf.js --engine=slimerjs</pre>
       <pre>succss check your-conf.js --engine=slimerjs</pre>
       <div class="tips">Unlike PhantomJS, SlimerJS is not a headless browser (new desktop windows are created to take screenshots). It will sometimes be more accurate when it comes to display ressources loaded on AJAX requests as well as fonts.</div>
       <div class="tips">The <a href="http://slimerjs.org/download.html#lightweight">lightweight</a> version of SlimerJS can take advantage of your installed Firefox binary.</div>
 
-      <h2>Diffing methods</h2>
+      <h2 id="diffing">Diffing methods</h2>
       <span class="headline">The default diff image is made with <a href="https://github.com/HumbleSoftware/js-imagediff">js-imagediff</a>.</span>
       <span class="headline">You are not limited to just imagediff, or even a single diff method for one succss check run. A ResembleJS implementation is bundled with succss, to enable it, just do:</span>
       <pre>succss check your-conf.js --resemble</pre>
@@ -355,7 +355,7 @@ Succss.pages = {
       <pre>succss check your-conf.js --imagediff=false --resemble</pre>
       <div class="tips">In practice, the prefered way to set the diffing method is with the <a href="/commandline#options">Succss.options</a> object (more on that below).</div>
 
-      <h2>Additionnal casperjs options</h2>
+      <h2 id="casperjs">Additionnal casperjs options</h2>
       <span class="headline">CasperJs <a href="http://casperjs.readthedocs.org/en/latest/modules/casper.html#index-1">options</a> are comaptible with Succss, from the commandline or in the <a href="/commandline#options">Succss.options</a> object.</span>
       <span class="headline">For instance, <a href="http://casperjs.readthedocs.org/en/latest/modules/casper.html#exitonerror">exitOnError</a> and <a href="http://casperjs.readthedocs.org/en/latest/modules/casper.html#waittimeout">waitTimeout</a> are very useful, commonly used options you may need.</span>
       <pre>succss check your-conf.js --exitOnError=false</pre>
@@ -396,7 +396,7 @@ Succss.options = {
       <div class="tips">When the diff option is set to true, Succss will search for the user's custom <a href="/customize#diff">Succss.diff</a> function.</div>
       <div class="tips">This snippet is extracted from succss-bridge.js</div>
 
-      <h2>Screenshots settings</h2>
+      <h2 id="settings">Screenshots settings</h2>
       <span class="headline">Captures file type and compression can be set with the following settings:</span>
       <ul>
         <li><strong>imgType</strong>: either jpeg or png. Default is 'png'</li>
@@ -409,7 +409,7 @@ Succss.options = {
       </ul>
       <div class="tips">To tweak ResembleJS settings, you need to implement your own Succss diff function. It's not that hard, you may read the related <a href="customize#resemble">documentation</a>.</div>
 
-      <h2>Check against custom files</h2>
+      <h2 id="checkdir">Check against static files</h2>
       <span class="headline">You can choose not to check against live screenshots updates, but to use a custom location that mirrors the reference directory tree. Just use the checkDir option.</span>
       <pre>succss check your-conf.js --checkDir=custom-path</pre>
       <div class="tips">Keep in mind that the checkDir directory tree needs to match directories specified in your-conf.js</div>
