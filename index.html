@@ -231,8 +231,8 @@ Succss.pages = {
       <h2 id="filename">Succss.setFileName</h2>
       <span class="headline">You can choose the logic behind file naming done by a configuration file, just override the Succss.setFileName function.</span>
       <pre class="code"><code class="language-javascript">Succss.setFileName = function(capture) {
-  // Will output something along these lines: "homepage--header--1920x1200.png"
-  return capture.page.name + '--' + capture.name + '--' + capture.viewport.width + 'x' + capture.viewport.height + '.png';
+  // Will output something along these lines: "homepage--header--viewportname.png"
+  return capture.page.name + '--' + capture.name + '--' + capture.viewport.name + '.png';
 };
 </code></pre>
       <span class="headline">Following properties are available through the capture Object parameter:</span>
@@ -250,9 +250,9 @@ Succss.pages = {
       <span class="headline">The following small, yet useful code snippet, outputs full pages screenshots.</span>
       <pre class="code"><code class="language-javascript">// "condensed-conf.js"
 Succss.pages = {
-  // Will output: './screenshots/home--body--default-viewport.png'
+  // Will output: './screenshots/home--body--1366x768.png'
   'home': { url:'succss.ifzenelse.net' },
-  // Will output: './screenshots/home--body--default-viewport.png'
+  // Will output: './screenshots/home--body--1366x768.png'
   'configuration': { url:'succss.ifzenelse.net/configuration?bgColor=088' }
 ...
 }</code></pre>
@@ -277,7 +277,7 @@ Succss.viewports = {
 }
 
 Succss.setFileName = function(capture) {
-  return capture.page.name + '--' + capture.name + '--' + capture.viewport.name + '-viewport.png';
+  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
 }</code></pre>
 
       <h2 id="variables">Variables</h2>
@@ -468,7 +468,7 @@ Succss.viewports = {
 }
 // You can keep the default setFileName, which is:
 //Succss.setFileName = function(capture) {
-//  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.name + '-viewport.png';
+//  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
 //}
 </code></pre>
 <pre class="code"><code class="language-javascript">// second-conf.js
@@ -482,7 +482,9 @@ Succss.viewports = {
 }
 Succss.setFileName = function() {
   // Set a filename similar to the original-conf.js, only freeze the viewport:
-  return captureState.page.name + '--' + captureState.name + '--' + 'wide-viewport.png';
+  return captureState.page.name + '--' + 
+         captureState.name + 
+         '--1920x1200.png';
 }
 </code></pre>
       <span class="headline">With the above, "succss check second-conf.js" will check A,B and C viewports against the 'wide' viewport from original-conf.js.</span>
@@ -516,7 +518,9 @@ Succss.pages = {
 }
 Succss.setFileName = function() {
   // We force comparison to the reference 'installation' screenshot regardless of the updated page name:
-  return 'installation' + '--' + captureState.name + '--' + captureState.viewport.name + '-viewport.png';
+  return 'installation' + '--' + 
+         captureState.name + '--' + 
+         captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
 }
 </code></pre>
       <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'commandline' and 'fork' to the 'installation' page body.</span>
