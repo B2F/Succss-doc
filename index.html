@@ -46,37 +46,40 @@
       <div class="tips">Succss rely on <a href="http://phantomjs.org/" target="_blank">PhantomJS</a> and <a href="http://casperjs.org/" target="_blank">CasperJS</a> dependencies, automatically resolved by <a href="https://www.npmjs.com/" target="_blank">npm</a>. Follow <a href="/installation">this guide</a> if you have trouble with npm.</div>
 
       <span class="headline">Describe your website CSS:</span>
-      <pre class="code" style="height:500px;"><code class="language-javascript">//data.js
+      <pre class="code" style="height:470px;"><code class="language-javascript">//data.js
 Succss.pages = {
-  'any webpage': {
+  'home': {
     url:'succss.ifzenelse.net',
-    directory:'screenshots',
+    directory:'screenshots/dir',
+    // captures: { 'name' : 'CSS selector' }
     captures: {
-      // Key:name Value:CSS selector.
-      'header':'header',
-      'square1':'#red.color-square',
-      'square2':'#green.color-square',
-      'square3':'#blue.color-square'
+      // leave an empty value if selector == name
+      'header':'',
+      'dynamic-text':'body #header-text > #static-line + span',
     },
   },
-  'another one': { 
+  'another-page': { 
     ... 
   }
 };
 
-Succss.viewports: {
-  'classic wide': {
+Succss.viewports = {
+  // './screenshots/dir/home--header--1366x768.png' file
+  // './screenshots/dir/home--dynamic-text--1366x768.png' file
+  'default': {
     width: 1366,
     height: 768
   },
-  'mobile': {
-    width: 320,
+  // './screenshots/dir/home--header--640x480.png' file
+  // './screenshots/dir/home--dynamic-text--640x480.png' file
+  'mobile-landscape': {
+    width: 640,
     height: 480
   },
   ...
 }</code></pre>
 
-      <div class="tips">Succss can be used in many ways, for many use cases.
+      <div class="tips">Succss can do more, such as interactions with the browser before capture.
         Later, you can also read <a href="/configuration">advanced Configuration</a>.</div>
 
       <span class="headline">Take base screenshots:</span>
