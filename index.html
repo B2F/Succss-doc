@@ -342,8 +342,11 @@ Succss.pages = {
       <span class="headline">The default browser engine is the PhantomJS headless browser, which is using Webkit (the chrome and safari engine). To render pages with Gecko, first you must have <a href="http://slimerjs.org/">SlimerJS</a> installed on your computer, then run:</span>
       <pre>succss add your-conf.js --engine=slimerjs</pre>
       <pre>succss check your-conf.js --engine=slimerjs</pre>
-      <div class="tips">Unlike PhantomJS, SlimerJS is not a headless browser (new desktop windows are created to take screenshots). It will sometimes be more accurate when it comes to display ressources loaded on AJAX requests as well as fonts.</div>
+      <span class="headline">Unlike PhantomJS, SlimerJS is not a headless browser (new desktop windows are created to take screenshots). It will sometimes be more accurate when it comes to display ressources loaded on AJAX requests as well as fonts.</span>
       <div class="tips">The <a href="http://slimerjs.org/download.html#lightweight">lightweight</a> version of SlimerJS can take advantage of your installed Firefox binary.</div>
+      <span class="headline"><u>Warning</u>: With the slimerjs engine, you can't use commandline options containing '=s' (including filters). When working with filters, a quick workaround is to use the ',' prefix, otherwise this is the error message you will likely see:</span>
+      <pre>[Exception... "Component returned failure code: 0x80520006 (NS_ERROR_FILE_TARGET_DOES_NOT_EXIST) [nsIFile.isFile]"  nsresult: "0x80520006 (NS_ERROR_FILE_TARGET_DOES_NOT_EXIST)"  location: "JS frame :: resource://slimerjs/addon-sdk/toolkit/loader.js -> resource://slimerjs/addon-sdk/sdk/io/file.js :: isFile :: line 116"  data: no]</pre>
+      <div class="tips">Run 'succss check --pages=,special --engine=slimerjs' instead of 'succss check --pages=special --engine=slimerjs'.</div>
 
       <h2 id="diffing">Diffing methods</h2>
       <span class="headline">The default diff image is made with <a href="https://github.com/HumbleSoftware/js-imagediff">js-imagediff</a>.</span>
