@@ -176,8 +176,10 @@ Succss.pages = {
         // Selectors can have a hook callback "before" capture.
         'before': function() {
           this.click('#logo-image');
-          console.log('... Waiting for color squares reinitialization');
-          this.wait(900);
+          console.log('... Waiting for color squares randomization');
+          this.wait(900, function() {
+            console.log('Done!');
+          });
         }
       },</code></pre>
       <div class="tips">The 'header' key above is actually the capture's name. The selector, while not explicitly set, is deducted from the name. See below for another example with a selector set.</div>
@@ -281,9 +283,9 @@ Succss.setFileName = function(capture) {
       <pre class="code"><code class="language-javascript">var baseUrl = 'succss.ifzenelse.net';
 
 Succss.pages = {
-  'home': { url:baseUrl }
-  'page1': { url:baseUrl + '/installation' }
-  'page2': { url:baseUrl + '/configuration' }
+  'home': { url:baseUrl },
+  'page1': { url:baseUrl + '/installation' },
+  'page2': { url:baseUrl + '/configuration' },
   'pageN': { url:baseUrl + '/customize' }
 }</code></pre>
       <div class="tips">Reminder: the Succss configuration is a javascript file.</div>
@@ -481,7 +483,7 @@ Succss.setFileName = function() {
 }
 </code></pre>
       <span class="headline">With the above, "succss check second-conf.js" will check A,B and C viewports against the 'wide' viewport from original-conf.js.</span>
-      <div class="tips">Succss Imagediff's and ResembleJS's default implementations write diff images in a <a>directory tree</a> starting with the capture start time timestamp, then the checked page and viewport identifier, then the reference's directory tree. The filename will be the reference's one. In short, diff images will never be erased due to improper setFileName usage (while references screenshots can be overwritten) unless you write your <a href="customize#diff">own diff</a> implementation.</div>
+      <div class="tips">Succss Imagediff's and ResembleJS's default implementations write diff images in the following <strong>directory tree</strong> (./(imagediff|resemble)/(start-time-stamp-integer)/(page-viewport-uniqueId)/(capture-directory-from-conf)/(base-filename)): the diff method, the capture start time timestamp, then the checked page and viewport identifier, then the reference's directory tree. The filename will be the reference's one. In short, diff images will never be erased due to improper setFileName usage (while references screenshots can be overwritten) unless you write your <a href="customize#diff">own diff</a> implementation.</div>
 
       <h2>Pages comparison</h2>
       <span class="headline">You can extend the preceding viewports checking logic to pages. First, <a href="configuration#source">"source"</a> the pages you want to compare, then freeze the page segment of filenames, like so:</span>
