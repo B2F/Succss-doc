@@ -372,7 +372,7 @@ Succss.pages = {
       <div class="tips">When an option is given with no value, true is assumed (see --resemble above).</div>
 
       <h2 id="options">Succss.options</h2>
-      <span class="headline">Commandline options can be avoided by setting "default" options (commandline options take precedence) via the Succss.options object. Beware that the <strong>--engine</strong> option is not compatible with Succss.options.</span>
+      <span class="headline">Commandline options can be avoided by setting "default" options (commandline options take precedence) via the Succss.options object. Beware that the <strong>--engine</strong> option can not be set in Succss.options.</span>
       <span class="headline">Your default options may look like this:</span>
       <pre class="code"><code class="language-javascript">// your-conf.js
 ...
@@ -618,7 +618,7 @@ Succss.callback = function(capture) {
     <pre>succss check your-conf.js --good</pre>
 
     <h2 id="diff">Custom diff (Succss.diff)</h2>
-    <span class="headline">In the previous <a href="/customize#callback">Succss.callback</a> example, we actually inverted the default checking behavior: it fails if no difference is found. But while Succss.callback is used to add assertions, it doesn't change nor remove assertions from the diff method.</span>
+    <span class="headline">In the previous <a href="/customize#callback">Succss.callback</a> example, we actually inverted the default checking behavior: it fails if no difference is found. While Succss.callback is used to add assertions, it doesn't change nor remove assertions from the diff method.</span>
     <span class="headline">The <strong>Succss.diff</strong> function is hooked later than Succss.callback, only when "succss check" run. Particularly, base and updated html images, as well as the full capture object are loaded as parameters.</span>
     <span class="headline">Following the preceding Succss.callback example, here is a Succss.diff function written to change the diffing assertion.</span>
     <pre class="code"><code class="language-javascript">/*
@@ -638,7 +638,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
 
     casper.test.assertFalse(imagesMatch, 'Capture is different to base screenshot (imagediff).');
 }</code></pre>
-     <div class="tips">The default imagediff (actually this.imagediff function below) behavior will still run, unless you set the imagediff option to false. From <a href="/commandline#diffing">commandline</a> or <a href="/commandline#options">Succss.options</a>, imagediff, resemble and diff are available options.</div>
+     <div class="tips">The default imagediff (actually this.imagediff function below) behavior will still run, unless you set the imagediff option to false from <a href="/commandline#diffing">commandline</a> or <a href="/commandline#options">Succss.options</a>.</div>
  
      <span class="headline">Here, "this" is a reference to the succss.js module's object. It has the three following methods of interest:</span>
      <ul>
@@ -745,13 +745,13 @@ Succss.diff = function(imgBase, imgCheck, capture) {
       <div id="more-infos">
         <span class="headline" id="more-infos-headline">Do you want more infos ?</span>
         <div id="more-infos-links">
-          <a href="/usecases">.) Typical Use Cases</a>
           <a href="/installation">.) Installation Troubleshooting</a>
           <a href="/configuration">.) Advanced Configuration</a>
           <a href="/commandline">.) Succss from the CLI</a>
           <a href="/customize">.) Custom Validations</a>
           <a href="/why">.) Why another CSS Regression Testing Tool ?</a>
           <a href="/fork">.) Succss, at its Source !</a>
+          <a href="/usecases">.) Typical Use Cases</a>
           <a href="/home">--- Home Page</a>
         </div>
       </div>
