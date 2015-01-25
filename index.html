@@ -143,7 +143,7 @@ Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
       <div class="tips">Succss will read the static properties and methods you provide. The callback and diff hook functions are part of the <a href="customize">custom validation</a> facility.</div>
       
       <h2 id="pages">Succss.pages</h2>
-      <span class="headline">Succss main configuration is simple: keyed objects representing webpages with captures as name:selector.</span>
+      <span class="headline">Succss main configuration is simple: keyed objects representing webpages with captures as 'name' : 'selector'.</span>
 
       <pre class="code"><code class="language-javascript">Succss.pages = {
   'homepage': {
@@ -157,9 +157,9 @@ Succss.diff = function(imgBase, imgCheck, capture){...}</code></pre>
   }
 }
 </code></pre>
-       <div class="tips">Beware that taking body screenshots is a bad practice: while it's quick to do, it is innefficient and error prone... Which is good to note in this guide.</div>
+      <div class="tips">Be careful not to write reserved ($ & + , / : ; = ? @) or unsafe (" < > # % { } | \ ^ ~ [ ] `) characters in your captures names, unless you write a custom <a href="configuration#filename">setFileName</a> function to get around these.</div>
+      <div class="tips">Beware that taking body screenshots is mostly a bad practice: while it's quick to do, it is innefficient and error prone... Which is good to note in this guide.</div>
 
-      <div class="tips">While running succss, pages and captures can be filtered <a href="/commandline#filters">with the --pages and --captures options</a>.</div>
       <ul>
         <li><strong>url</strong>: Protocol is optionnaly specified, default is "http://" . The website for which you will take screenshots.</li>
         <li><strong>directory</strong>: The directory where screenshots will be stored, it can be absolute or relative to your current console path.</li>
@@ -179,7 +179,7 @@ Succss.pages = {
         // Selectors can have a hook callback "before" capture.
         'before': function() {
           this.click('#logo-image');
-          console.log('... Waiting for color squares randomization');
+          console.log('... Waiting for color squares reinitialization');
           this.wait(900, function() {
             console.log('Done!');
           });
@@ -301,7 +301,7 @@ Succss.pages = {
     'url': SuccssDataCommon.url+'/installation',
     'directory':SuccssDataCommon.baseDirectory+'/installation',
     captures: {
-      'body':'body'
+      'header':''
     },
   },
   'configuration': {
