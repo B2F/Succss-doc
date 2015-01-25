@@ -448,7 +448,7 @@ Succss.options = {
       <span class="headline">Screenshots from your website are written in the directory you choose (<a href="/configuration#default">default</a> is ./screenshots). You can open these images manually and detect obvious anomally just by visualizing them <strong>side to side</strong>, especially to quickly compare viewports rendering on a wide range of resolutions (there is also an automated way for this, read more below).</span>
 
       <h2>Viewports comparison</h2>
-      <span class="headline">As stated above, you can compare viewports manually by configuring a <a href="/configuration#viewports">list of viewports</a> to take screenshots with. Otherwise, you can write a configuration overwiting viewports list from another, thanks to <a href="/customize#reuse">phantom.injectJs</a> method, then compare the second to the first. In the second configuration file, you will also need to write a custom setFileName function without dynamic viewport properties for screenshots to be compared.</span>
+      <span class="headline">As stated above, you can compare viewports manually by configuring a <a href="/configuration#viewports">list of viewports</a> to take screenshots with. Otherwise, you can write a configuration overwiting viewports list from another, thanks to <a href="/customize#reuse">this.injectJs</a> method, then compare the second to the first. In the second configuration file, you will also need to write a custom setFileName function without dynamic viewport properties for screenshots to be compared.</span>
       <span class="headline">e.g.</span>
       <pre class="code"><code class="language-javascript">// original-conf.js
 Succss.pages = { ...
@@ -467,7 +467,7 @@ Succss.viewports = {
 //}
 </code></pre>
 <pre class="code"><code class="language-javascript">// second-conf.js
-phantom.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
+this.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
 // Do not overwrite pages, only viewports and setFileName
 Succss.viewports = {
   // The list of viewports to check against one viewport from original-conf.js
@@ -497,7 +497,7 @@ Succss.pages = {
 }
 </code></pre>
 <pre class="code"><code class="language-javascript">// second-conf.js
-phantom.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
+this.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
 // Do not overwrite pages, only viewports and setFileName
 Succss.pages = {
   'commandline': {
@@ -617,7 +617,7 @@ Succss.callback = function(capture) {
  */
 Succss.diff = function(imgBase, imgCheck, capture) {
 
-    phantom.injectJs('lib/imagediff.js');
+    this.injectJs('lib/imagediff.js');
 
     imgDiff = imagediff.diff(imgBase, imgCheck);
     var imagesMatch = imagediff.equal(imgBase, imgCheck, capture.options.tolerancePixels);
@@ -641,7 +641,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
      <span class="headline" id="resemble">The next Succss.diff example is extending <a href="https://github.com/Huddle/Resemble.js">ResembleJS</a> default settings:</span>
      <pre class="code"><code class="language-javascript">Succss.diff = function(imgBase, imgCheck, capture) {
 
-    phantom.injectJs('lib/resemble.js');
+    this.injectJs('lib/resemble.js');
 
     resemble.outputSettings({
       errorColor: {
@@ -657,7 +657,8 @@ Succss.diff = function(imgBase, imgCheck, capture) {
     this.resemble(imgBase, imgCheck, capture);
 
 };</code></pre>
-    <div class="tips">The <strong>phantom.injectJs</strong> path is relative to your succss-bridge.js directory (most likely somewhere close to your node_modules). It means you will always have access to lib/resemblejs and lib/imagediff without adding them manually. You can specify a path relative to the console directory by prefixing it with fs.workingDirectory + '/...'</div>
+    <div class="tips">The <strong>this.injectJs</strong> path is relative to your succss-bridge.js directory (most likely somewhere close to your node_modules). It means you will always have access to lib/resemblejs and lib/imagediff without adding them manually. You can specify a path relative to the console directory by prefixing it with fs.workingDirectory + '/...'</div>
+    <div class="tips">The this.injectJs is actually a wrapper around <a href="http://phantomjs.org/api/phantom/method/inject-js.html">phantom.injectJs</a>, it is however loading files only once. Thus, this.resemble does not reset resemble.outputSettings.</div>
 
       <h2 id="capture">The capture parameter</h2>
       <span class="headline">The capture object is similar to the one available in <a href="/configuration#filename">Succss.setFileName</a>:</span>
@@ -691,7 +692,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
 
       <h2 id="reuse">Custom validations reuse</h2>
       <span class="headline">You can reuse your own validation logic across configuration files. To include javascript files, do the following:</span>
-      <pre class="code"><code class="language-javascript">phantom.injectJs(fs.workingDirectory + '/selftests/data.class.js');</code></pre>
+      <pre class="code"><code class="language-javascript">this.injectJs(fs.workingDirectory + '/selftests/data.class.js');</code></pre>
       <div class="tips">The selftests/data.class.js file is a set of common functions and values used across Succss selftests</div>
       <div class="tips">The javascript file injection can be used to factor any part of a configuration file, not only the validation process but also for <a href="/configuration#source">sourcing</a> Succss pages from another file.</div>
 
