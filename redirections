@@ -1,5 +1,5 @@
 location ~/installation {
-  return 301 index.html?page=installation&variation=30&breakage=50&speed=100&ygap=-55&bgColor=777&headline=5;
+  return 301 index.html?page=installation&variation=30&breakage=50&speed=1400&ygap=-55&bgColor=777&headline=5;
 }
 
 location ~/configuration {

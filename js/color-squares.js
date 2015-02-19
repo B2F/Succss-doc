@@ -11,7 +11,7 @@ var breakage = parseInt(params.breakage) || 50;
 var broken = false;
 
 var subHeadline = [
-  'Turn your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets into <strong>success</strong>ful design integrations.',
+  'Turn your <strong>CSS</strong> into <strong>success</strong>ful design integrations.',
   'Build your websites with SUCCSS, success guaranteed.',
   'Bring some <strong>fun</strong> to your <strong>C</strong>ascading <strong>S</strong>tlye<strong>S</strong>heets :)',
   'How sweet is using Succss? As eating a #f16 candy !',
