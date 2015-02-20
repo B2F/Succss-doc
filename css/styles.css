@@ -55,7 +55,8 @@ div#core article h1 {
 }
 
 div#core article h2 {
-  padding-top: 20px;
+  border-top: 1px solid #345;
+  padding-top: 23px;
 }
 
 div#core article h2 a {
