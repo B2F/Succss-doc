@@ -145,7 +145,8 @@ footer ul a {
 }
 
 footer ul img {
-  width:391px;
+  width:386px;
+  margin: 18px 0 7px 0;
 }
 
 footer ul li {
