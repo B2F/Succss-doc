@@ -524,7 +524,7 @@ Succss.setFileName = function() {
 }
 </code></pre>
       <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'commandline' and 'fork' to the 'installation' page body.</span>
-      <div class="tips">You can compare viewports and pages at the same time, just freeze both in the filename. See how it's done in <a href="/fork">selftests/data-compare.js</a>.</div>
+      <div class="tips">You can compare viewports and pages at the same time, just freeze both in the filename. See how it's done in <a href="https://github.com/B2F/Succss/blob/master/selftests/data-compare.js">selftests/data-compare.js</a>.</div>
 
       <h2>History versionning</h2>
       <span class="headline">Plain and simple. With a version management system like Git, keep records of your website design and integration changes through time.</span>
@@ -612,7 +612,7 @@ Succss.callback = function(capture) {
     }
   }
 }</code></pre>
-    <div class="tips">The code snippet above is actually inspired from succss source, where image differences are triggered (<a href="/fork">@see selftests/data-diff.js</a>).</div>
+    <div class="tips">The code snippet above is actually inspired from succss source, where image differences are triggered (<a href="https://github.com/B2F/Succss/blob/master/selftests/data-diff.js#L29">@see selftests/data-diff.js</a>).</div>
     <div class="tips">The <a href="/customize#capture">capture</a> parameter, casper.test and fs <a href="/customize#tools">objects</a> are all explained below.</div>
     <span class="headline">To deactivate the above custom assertions, you would do:</span>
     <pre>succss check your-conf.js --good</pre>
@@ -642,11 +642,11 @@ Succss.diff = function(imgBase, imgCheck, capture) {
  
      <span class="headline">Here, "this" is a reference to the succss.js module's object. It has the three following methods of interest:</span>
      <ul>
-       <li><strong>this.imagediff(imgBase, imgUpdate, capture)</strong>: calls the bundled imagediff implementation (do not confound Succss this.imagediff and the above imagediff.diff function from lib/imagediff.js).</li>
-       <li><strong>this.resemble(imgBase, imgUpdate, capture)</strong>: calls the bundled resemble implementation.</li>
        <li><strong>this.writeImgDiff(imgDiff, imgBase, imgCheck, filePath)</strong>: the writeImgDiff function creates a <a href="home#differences">HTML canvas</a> with the three html images arguments provided and write the resulting file to the filePath location.</li>
+       <li><strong>this.imagediff(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L427">bundled imagediff</a> implementation (do not confound Succss this.imagediff and the above imagediff.diff function from lib/imagediff.js).</li>
+       <li><strong>this.resemble(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L440">bundled resemble</a> implementation.</li>
      </ul>
-     <div class="tips">If you understood correctly, you guessed that both this.imagediff and this.resemble call this.writeImgDiff internally (<a href="/fork">@see succss.js</a>).</div>
+     <div class="tips">If you understood correctly, you guessed that both this.imagediff and this.resemble call this.writeImgDiff internally (<a href="https://github.com/B2F/Succss/blob/master/succss.js#L467">@see succss.js</a>).</div>
      <span class="headline" id="resemble">The next Succss.diff example is extending <a href="https://github.com/Huddle/Resemble.js">ResembleJS</a> default settings:</span>
      <pre class="code"><code class="language-javascript">Succss.diff = function(imgBase, imgCheck, capture) {
 
@@ -678,7 +678,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
         <li><strong>capture.options</strong>: any <a href="/commandline#options">Succss.options</a> or one given to the commandline</li>
         <li><strong>capture.count</strong>: planned, remaining, failures, startTime</li>
       </ul>
-      <div class="tips">capture.count properties are especially useful when errors are thrown. Also, SuccssDataCommon.assertSuiteSuccess from <a href="/fork">selftests/data.class.js</a> is a good example.</div>
+      <div class="tips">capture.count properties are especially useful when errors are thrown. Also, SuccssDataCommon.assertSuiteSuccess from <a href="https://github.com/B2F/Succss/blob/master/selftests/data.class.js#L39">selftests/data.class.js</a> is a good example.</div>
       <span class="headline">With these extra parameters:</span>
       <ul>
         <li><strong>capture.file</strong>: the filename from Succss.setFileName</li>
