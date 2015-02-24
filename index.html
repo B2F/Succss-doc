@@ -277,7 +277,7 @@ Succss.viewports = {
 }
 
 Succss.setFileName = function(capture) {
-  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
+  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
 }</code></pre>
 
       <h2 id="variables">Variables</h2>
@@ -468,7 +468,7 @@ Succss.viewports = {
 }
 // You can keep the default setFileName, which is:
 //Succss.setFileName = function(capture) {
-//  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
+//  return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
 //}
 </code></pre>
 <pre class="code"><code class="language-javascript">// second-conf.js
@@ -520,7 +520,7 @@ Succss.setFileName = function() {
   // We force comparison to the reference 'installation' screenshot regardless of the updated page name:
   return 'installation' + '--' + 
          captureState.name + '--' + 
-         captureState.viewport.width + 'x' + captureState.viewport.height + 'png';
+         captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
 }
 </code></pre>
       <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'commandline' and 'fork' to the 'installation' page body.</span>
