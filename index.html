@@ -296,7 +296,7 @@ Succss.pages = {
       <h2 id="source">The source property</h2>
       <span class="headline">The way Javascript assign objects is by reference. It means modifications done on a copied object will get reflected on the original object.</span>
       <span class="headline">To work around this, Succss.pages offers a 'source' attribute to extend another page's properties. For instance:</span>
-      <pre class="code"><code class="language-javascript">Succss.pages = {
+      <pre class="code" data-line="12"><code class="language-javascript">Succss.pages = {
   'installation': {
     'url': SuccssDataCommon.url+'/installation',
     'directory':SuccssDataCommon.baseDirectory+'/installation',
@@ -621,7 +621,7 @@ Succss.callback = function(capture) {
     <span class="headline">In the previous <a href="/customize#callback">Succss.callback</a> example, we actually inverted the default checking behavior: it fails if no difference is found. While Succss.callback is used to add assertions, it doesn't change nor remove assertions from the diff method.</span>
     <span class="headline">The <strong>Succss.diff</strong> function is hooked later than Succss.callback, only when "succss check" run. Particularly, base and updated html images, as well as the full capture object are loaded as parameters.</span>
     <span class="headline">Following the preceding Succss.callback example, here is a Succss.diff function written to change the diffing assertion.</span>
-    <pre class="code"><code class="language-javascript">/*
+    <pre class="code" data-line="12,13,16"><code class="language-javascript">/*
  * Adds a diff function, replicating Succss's imagediff function but changing path and assertion.
  */
 Succss.diff = function(imgBase, imgCheck, capture) {
@@ -688,7 +688,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
       </ul>
       <div class="tips">Filename and succss command are not set when Succss.setFileName is called, hence the unavailability of the extras parameters.</div>
       <span class="headline">It is possible to use the capture parameter object in the same fashion as a custom commandline option, such as the --good example above.</span>
-      <pre class="code"><code class="language-javascript">Succss.pages = {
+      <pre class="code" data-line="5"><code class="language-javascript">Succss.pages = {
   'capture-property-example-page': {
     'url':'succss.ifzenelse.net',
 ...
@@ -696,9 +696,9 @@ Succss.diff = function(imgBase, imgCheck, capture) {
   }
 }</code></pre>
       <div class="tips">This example adds the capture.page.good property and set it to true.</div>
-      <pre class="code"><code class="language-javascript">Succss.callback = function(capture) {
+      <pre class="code" data-line="3"><code class="language-javascript">Succss.callback = function(capture) {
 ...
-    if (!capture.page.good && !capture.options.good) {
+    if (!capture.page.good) {
       casper.test.assertTruthy(fs.exists(capture.filePath), 'The updated capture was taken (' + capture.filePath + ').');
       casper.test.assertNotEquals(fs.size(capture.filePath), fs.size(capture.basePath), 'Base and update are different in size.');
     }</code></pre>

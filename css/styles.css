@@ -107,6 +107,15 @@ div#core pre.code {
   padding:23px;
 }
 
+div#core pre.code .line-highlight {
+  height:20px;
+  border:1px solid #123;
+  background:none repeat scroll 0% 0% rgba(123, 255, 123, 0.1);
+}
+div#core pre.code .line-highlight:before {
+  content:none;
+}
+
 div#core div.tips {
   background:rgba(204, 204, 204, 0.7) url("../img/infos.png") no-repeat 99.9% 1px;
   margin:3px 0;
