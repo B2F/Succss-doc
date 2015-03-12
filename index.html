@@ -488,15 +488,16 @@ Succss.setFileName = function() {
 }
 </code></pre>
       <span class="headline">With the above, "succss check second-conf.js" will check A,B and C viewports against the 'wide' viewport from original-conf.js.</span>
-      <div class="tips">Succss Imagediff's and ResembleJS's default implementations write diff images in the following <strong>directory tree</strong> (./(imagediff|resemble)/(start-time-stamp-integer)/(page-viewport-uniqueId)/(capture-directory-from-conf)/(base-filename)): the diff method, the capture start time timestamp, then the checked page and viewport identifier, then the reference's directory tree. The filename will be the reference's one. In short, diff images will never be erased due to improper setFileName usage (while references screenshots can be overwritten) unless you write your <a href="customize#diff">own diff</a> implementation.</div>
+      <div class="tips">Succss Imagediff's and ResembleJS's default implementations write diff images in the following <strong>directory tree</strong> (./(imagediff|resemble)/(unique date identifier)/(page-viewport uniqueId)/(capture-directory-from-conf)/(base-filename)): the diff method name, the capture time, then the checked page and viewport identifier, then the reference's directory tree. The filename will be the reference's one. In short, diff images will never be erased due to improper setFileName usage (while references screenshots can be overwritten) unless you write your <a href="customize#diff">own diff</a> implementation.</div>
 
       <h2>Pages comparison</h2>
       <span class="headline">You can extend the preceding viewports checking logic to pages. First, <a href="configuration#source">"source"</a> the pages you want to compare, then freeze the page segment of filenames, like so:</span>
       <pre class="code"><code class="language-javascript">// original-conf.js
+var baseUrl = 'succss.ifzenelse.net';
 Succss.pages = {
   // Original page for comparison.
   'installation': {
-    'url': SuccssDataCommon.url+'?page=installation&variation=0',
+    'url': baseUrl + '?page=installation&variation=0',
     captures: {
       'body':'body'
     },
@@ -507,13 +508,17 @@ Succss.pages = {
 this.injectJs(fs.workingDirectory + '/mypath/original-conf.js');
 // Do not overwrite pages, only viewports and setFileName
 Succss.pages = {
+  'configuration': {
+    'url': baseUrl+'?page=configuration',
+    'captures': Succss.pages.installation.captures;
+  },
   'commandline': {
-    'url': SuccssDataCommon.url+'?page=commandline',
-    'source': 'installation'
+    'url': baseUrl+'?page=commandline',
+    'source': 'configuration'
   },
   'fork': {
-    'url': SuccssDataCommon.url+'?page=fork',
-    'source': 'installation'
+    'url': baseUrl+'?page=fork',
+    'source': 'configuration'
   }
 }
 Succss.setFileName = function() {
@@ -523,7 +528,7 @@ Succss.setFileName = function() {
          captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
 }
 </code></pre>
-      <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'commandline' and 'fork' to the 'installation' page body.</span>
+      <span class="headline">Now, "succss check second-conf.js" will compare body screenshots of pages 'configuration', 'commandline' and 'fork' to the 'installation' page captures.</span>
       <div class="tips">You can compare viewports and pages at the same time, just freeze both in the filename. See how it's done in <a href="https://github.com/B2F/Succss/blob/master/selftests/data-compare.js">selftests/data-compare.js</a>.</div>
 
       <h2>History versionning</h2>
