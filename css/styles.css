@@ -54,7 +54,7 @@ div#core article h1 {
   font-size: 30px;
 }
 
-div#core article h2 {
+h2, h3 {
   border-top: 1px solid #345;
   padding-top: 23px;
 }
@@ -136,7 +136,8 @@ div#core #more-infos div#more-infos-links {
 }
 
 div#core span#more-infos-headline {
-  border-bottom:1px solid white
+  border-bottom:1px solid white;
+  font-weight:bold;
 }
 
 footer a {
@@ -171,7 +172,6 @@ div#core div#more-infos-links a {
   display:block;
   color:#FFF;
   font-size:23px;
-  font-weight:bold;
   margin-bottom:7px;
 }
 
@@ -225,7 +225,7 @@ aside#colors div.color-square.odd {
   a#fork-on-github {
     position:relative;
     display:inline;
-    z-index:10000;
+    z-index:1000;
   }
 }
 
@@ -247,6 +247,21 @@ aside#colors div.color-square.odd {
   aside#colors {
     width:28%;
     position:absolute;
+  }
+}
+
+@media (min-width: 1280px) and (min-height: 433px) {
+  div#core div#more-infos {
+    display:block;
+    position:fixed;
+    right:2%;
+    top:2%;
+    z-index:100;
+    width:23%;
+    padding:19px 21px;
+  }
+  div#more-infos span.headline, div#more-infos div {
+    padding:9px;
   }
 }
 

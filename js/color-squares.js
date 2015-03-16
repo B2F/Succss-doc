@@ -80,7 +80,7 @@ window.onload = function() {
   aside.appendChild(whyLink);
   onColorSquaresClick(function(e) {
     document.body.style.background = colors[e.target.id];
-    getFooter().style.backgroundColor = 'rgba(' + hexToRgb(colors[e.target.id]) + ', 0.7)';
+    updateColoredElements(colors[e.target.id]);
     setTwitterShare();
   });
   imgLogo = document.getElementById('logo-image');
@@ -146,7 +146,7 @@ function randomizePos(pos, variation) {
 function randomizeBackground(colors) {
   colorPicked = colors[Math.floor(Math.random()*(colors.length-1))];
   document.body.style.backgroundColor = colorPicked;
-  getFooter().style.backgroundColor = 'rgba(' + hexToRgb(colorPicked) + ', 0.7)';
+  updateColoredElements(colorPicked);
 }
 
 function onColorSquaresClick(callback) {
@@ -178,7 +178,7 @@ function rainbowClick() {
 function setDefaultState() {
   variation = 0;
   document.body.style.backgroundColor = originalBackgroundColor;
-  getFooter().style.backgroundColor = 'rgba(' + hexToRgb(originalBackgroundColor) + ', 0.7)';
+  updateColoredElements(originalBackgroundColor);
   setSubHeadline(defaultHeadline);
   setTwitterShare();
 }
@@ -209,15 +209,16 @@ function setPage(pageName) {
 }
 
 function loadingFix() {
-  var css = 'article, #dynamic-line { display: none;} body {background-color: '+originalBackgroundColor+'} footer {background-color: rgba(' + hexToRgb(originalBackgroundColor)+ ', 0.7)}',
+  var css = 'article, #dynamic-line { display: none;} body {background-color: '+originalBackgroundColor+'} footer {background-color: rgba(' + hexToRgb(originalBackgroundColor)+ ', 0.7)} #more-infos {background-color: rgba(' + hexToRgb(originalBackgroundColor)+ ', 0.9)}',
       style = document.createElement('style');
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
 }
 
-function getFooter() {
-  return document.getElementById('supporters');
+function updateColoredElements(color) {
+  document.getElementById('supporters').style.backgroundColor = 'rgba(' + hexToRgb(color) + ', 0.7)';
+  document.getElementById('more-infos').style.backgroundColor = 'rgba(' + hexToRgb(color) + ', 0.9)';
 }
 
 function hexToRgb(hex) {
