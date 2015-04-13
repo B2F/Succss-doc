@@ -202,7 +202,7 @@ Succss.pages = {
             header[0].removeChild(clickImage);
           });
         }</code></pre>
-      <div class="tips">The evaluate function acts on behalf of the client's browser javascript, whereas the code outside is only user input.</div>
+      <div class="tips">The evaluate function acts on behalf of the browser's javascript, whereas the code outside is user input.</div>
       <div class="tips">You can't call console.log from an evaluate function. Nonetheless, you can call the "window.callPhantom()" function with either a string, or {dump:object} (which in turn will call <a href="/customize#tools">utils.dump</a> on your object).</div>
 
       <span class="headline">If you want to reuse "before" steps on the same page, you can use the first parameter passed to the before function:</span>
@@ -579,12 +579,12 @@ Succss.callback = function(capture) {
     <span class="headline">In the previous <a href="/customize#callback">Succss.callback</a> example, we actually inverted the default checking behavior: it fails if no difference is found. While Succss.callback is used to add assertions, it doesn't change nor remove assertions from the diff method.</span>
     <span class="headline">The <strong>Succss.diff</strong> function is hooked later than Succss.callback, only when "succss check" run. Particularly, base and updated html images, as well as the full capture object are loaded as parameters.</span>
     <span class="headline">Following the preceding Succss.callback example, here is a Succss.diff function written to change the diffing assertion.</span>
-    <pre class="code" data-line="12,13,16"><code class="language-javascript">/*
+    <pre class="code" data-line="6,16"><code class="language-javascript">/*
  * Adds a diff function, replicating Succss's imagediff function but changing path and assertion.
  */
 Succss.diff = function(imgBase, imgCheck, capture) {
 
-    this.injectJs('lib/imagediff.js');
+    phantom.injectJs(capture.options.libpath + '/imagediff.js');
 
     imgDiff = imagediff.diff(imgBase, imgCheck);
     var imagesMatch = imagediff.equal(imgBase, imgCheck, capture.options.tolerancePixels);
@@ -596,19 +596,20 @@ Succss.diff = function(imgBase, imgCheck, capture) {
 
     casper.test.assertFalse(imagesMatch, 'Capture is different to base screenshot (imagediff).');
 }</code></pre>
-     <div class="tips">The default imagediff (actually this.imagediff function below) behavior will still run, unless you set the imagediff option to false from <a href="/commandline#diffing">commandline</a> or <a href="/commandline#options">Succss.options</a>.</div>
+    <div class="tips">The path for <strong>phantom.injectJs</strong> is relative to your console directory. You can access succss npm path with <strong>capture.options.libpath</strong>, thus you will always be able to load resemble.js and imagediff.js from your npm installation (most likely somewhere close to your node_modules).</div>
+    <div class="tips">The default imagediff (actually this.imagediff function below) behavior will still run, unless you set the imagediff option to false from <a href="/commandline#diffing">commandline</a> or <a href="/commandline#options">Succss.options</a>.</div>
  
-     <span class="headline">Here, "this" is a reference to the succss.js module's object. It has the three following methods of interest:</span>
-     <ul>
-       <li><strong>this.writeImgDiff(imgDiff, imgBase, imgCheck, filePath)</strong>: the writeImgDiff function creates a <a href="home#differences">HTML canvas</a> with the three html images arguments provided and write the resulting file to the filePath location.</li>
-       <li><strong>this.imagediff(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L427">bundled imagediff</a> implementation (do not confound Succss this.imagediff and the above imagediff.diff function from lib/imagediff.js).</li>
-       <li><strong>this.resemble(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L440">bundled resemble</a> implementation.</li>
-     </ul>
-     <div class="tips">If you understood correctly, you guessed that both this.imagediff and this.resemble call this.writeImgDiff internally (<a href="https://github.com/B2F/Succss/blob/master/succss.js#L467">@see succss.js</a>).</div>
-     <span class="headline" id="resemble">The next Succss.diff example is extending <a href="https://github.com/Huddle/Resemble.js">ResembleJS</a> default settings:</span>
-     <pre class="code"><code class="language-javascript">Succss.diff = function(imgBase, imgCheck, capture) {
+    <span class="headline">Here, "this" is a reference to the succss.js module's object. It has the three following methods of interest:</span>
+    <ul>
+      <li><strong>this.writeImgDiff(imgDiff, imgBase, imgCheck, filePath)</strong>: the writeImgDiff function creates a <a href="home#differences">HTML canvas</a> with the three html images arguments provided and write the resulting file to the filePath location.</li>
+      <li><strong>this.imagediff(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L458">bundled imagediff</a> implementation (do not confound Succss this.imagediff and the above imagediff.diff function from imagediff.js).</li>
+      <li><strong>this.resemble(imgBase, imgUpdate, capture)</strong>: calls the <a href="https://github.com/B2F/Succss/blob/master/succss.js#L470">bundled resemble</a> implementation.</li>
+    </ul>
+    <span class="headline">Hint: both this.imagediff and this.resemble call this.writeImgDiff internally (<a href="https://github.com/B2F/Succss/blob/master/succss.js#L497">@see succss.js</a>).</span>
+    <span class="headline" id="resemble">The next Succss.diff example is extending <a href="https://github.com/Huddle/Resemble.js">ResembleJS</a> default settings:</span>
+    <pre class="code" data-line="16"><code class="language-javascript">Succss.diff = function(imgBase, imgCheck, capture) {
 
-    this.injectJs('lib/resemble.js');
+    this.injectJs(capture.options.libpath + '/resemble.js');
 
     resemble.outputSettings({
       errorColor: {
@@ -624,8 +625,7 @@ Succss.diff = function(imgBase, imgCheck, capture) {
     this.resemble(imgBase, imgCheck, capture);
 
 };</code></pre>
-    <div class="tips">The <strong>this.injectJs</strong> path is relative to your succss-bridge.js directory (most likely somewhere close to your node_modules). It means you will always have access to lib/resemblejs and lib/imagediff without adding them manually. You can specify a path relative to the console directory by prefixing it with fs.workingDirectory + '/...'</div>
-    <div class="tips">The this.injectJs is actually a wrapper around <a href="http://phantomjs.org/api/phantom/method/inject-js.html">phantom.injectJs</a>, it is however loading files only once. Thus, this.resemble does not reset resemble.outputSettings.</div>
+    <div class="tips">The <strong>this.injectJs</strong> method is actually a wrapper around <a href="http://phantomjs.org/api/phantom/method/inject-js.html">phantom.injectJs</a>, use it if you need to load files only once. For instance, this.resemble's this.injectJs call for resemble.js will not erase your resemble.outputSettings.</div>
 
       <h2 id="capture">The capture parameter</h2>
       <span class="headline">The capture object is similar to the one available in <a href="/configuration#filename">Succss.setFileName</a>:</span>
@@ -674,9 +674,9 @@ Succss.diff = function(imgBase, imgCheck, capture) {
       <div class="tips">You can use Succss this.echo(message, type) shortcut to print console logs with the CasperJS colorizer module.</div>
 
       <h2 id="reuse">Custom validations reuse</h2>
-      <span class="headline">You can reuse your own validation logic across configuration files. To include javascript files, do the following:</span>
-      <pre class="code"><code class="language-javascript">this.injectJs(fs.workingDirectory + '/selftests/data.class.js');</code></pre>
-      <div class="tips">The selftests/data.class.js file is a set of common functions and values used across Succss selftests</div>
+      <span class="headline">As seen above, you can reuse your own validation logic across configuration files. To include javascript files anywhere, do the following:</span>
+      <pre class="code"><code class="language-javascript">phantom.injectJs('selftests/data.class.js');</code></pre>
+      <div class="tips">The selftests/data.class.js file is a set of common functions and values used across Succss selftests. It is found in Succss directory (capture.options.libpath's parent)</div>
       <div class="tips">The javascript file injection can be used to factor any part of a configuration file, not only the validation process but also for <a href="/configuration#source">sourcing</a> Succss pages from another file.</div>
 
     </article>
