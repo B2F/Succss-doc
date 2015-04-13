@@ -76,7 +76,7 @@ window.onload = function() {
   whyLink.id = "why-link";
   whyLink.href = "#logo";
   whyLink.innerHTML = '?';
-  whyLink.title = 'These awesome color blocks are used for SUCCSS selftests.';
+  whyLink.title = 'Click here ?! These awesome color blocks are used for SUCCSS selftests.';
   aside.appendChild(whyLink);
   onColorSquaresClick(function(e) {
     document.body.style.background = colors[e.target.id];
