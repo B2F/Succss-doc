@@ -82,11 +82,11 @@ Succss.viewports = {
       <div class="tips">Succss can do more, such as interactions with the browser before capture.
         Later, you can also read <a href="/configuration">advanced Configuration</a>.</div>
 
-      <span class="headline">Take base screenshots:</span>
+      <span class="headline">Take reference screenshots:</span>
       <pre><code>succss add data.js</code></pre>
       <div class="tips">For advanced usage, the succss command has several options such as pages, captures and viewports <a href="/commandline#filters">filters</a>.</div>
 
-      <span class="headline">Compare base screenshots to updates:</span>
+      <span class="headline">Compare reference screenshots to updates:</span>
       <pre><code>succss check data.js</code></pre>
       <div class="tips">Succss is bundled with imagediff (default) and ResembleJS for comparisons. Captures validations can be fully <a href="customize">customized</a>.</div>
 
@@ -350,15 +350,15 @@ Succss.pages = {
         and your javascript configuration file is parsed by the <strong>succss.js</strong> PhantomJS module containing the core Succss logic.</span>
       <span class="headline">Read more below for the really interesting stuff.</span>
 
-      <h2 id="add">Add it</h2>
+      <h2 id="add">Add references</h2>
       <span class="headline">First you will need to write a javascript <a href="/configuration">configuration file</a>, describing pages and selectors on which you want to do the regression testing.</span>
       <pre>succss add your-conf.js</pre>
-      <div class="tips">This is how you add reference (base) captures.</div>
+      <div class="tips">Your reference screenshots will be used for searching differences in updates.</div>
 
-      <h2 id="check">Check it</h2>
-      <span class="headline">After some time or by continuous integration, you can launch the check command on the same file, or a slightly different one.</span>
+      <h2 id="check">Check updates</h2>
+      <span class="headline">After local code updates or by continuous integration, you can launch the check command on a configuration file for which reference screenshots have been taken.</span>
       <pre>succss check your-file.js</pre>
-      <div class="tips">You may want to have a file for adding and another for testing. While this is done to trigger differences in succss selftests/, just one file is good for most cases.</div>
+      <div class="tips">You may have a configuration file for adding and another for checking, if both have compatible pages and captures. Just one file is good for most cases.</div>
 
       <h2 id="filters">Filters</h2>
       <span class="headline"><a href="/configuration#pages">Pages</a>, <a href="/configuration#captures">captures</a> and <a href="/configuration#viewports">viewports</a> from the configuration file can be filtered for any succss run.</span>
@@ -428,6 +428,7 @@ Succss.options = {
   resemble:false,
   diffQuality:'80',
   tolerancePixels:'0',
+  diffLightness:100
 };</code></pre>
       <div class="tips">When the diff option is set to true, Succss will search for the user's custom <a href="/customize#diff">Succss.diff</a> function.</div>
       <div class="tips">This snippet is extracted from succss-bridge.js</div>
@@ -442,6 +443,7 @@ Succss.options = {
       <ul>
         <li><strong>diffQuality</strong>: a number between 0 (worst) and 100 (best, heavier). Default is 80.</li>
         <li><strong>tolerancePixels</strong>: the tolerance pixels for the imagediff algorithm.</li>
+        <li><strong>diffLightness</strong>: the added color value (lightness) in imagediff differences, up to 255. Default is 100.</li>
       </ul>
       <div class="tips">To tweak ResembleJS settings, you need to implement your own Succss diff function. It's not that hard, you may read the related <a href="customize#resemble">documentation</a>.</div>
 
@@ -455,6 +457,11 @@ Succss.options = {
       <pre>succss check your-conf.js --verbose --logLevel=info</pre>
       <pre>[info] [phantom] [SucCSS] Options: --imgType=png, --imgQuality=80, --diff=true, --imagediff=false, --resemble=false, --diffQuality=100, --tolerancePixels=0, --exitOnError=false, --pages=installation, --casper-path=/lib/node_modules/casperjs, --cli=true, --dataFile=/home/zen/Projets/Informatique/OpenSource/github/Succss/selftests/data-diff.js, --verbose=true, --logLevel=info, --do=check, --engine=phantomjs</pre>
       <div class="tips">The info log level displays the complete list of currently used options. Available levels, ordered by verbosity, are debug, info, warning and error.</div>
+
+      <h2>The list command</h2>
+      <span class="headline">Run "succss list" to list all available pages, it will launch a dry run, opening pages for each captures.</span>
+      <pre>succss list your-conf.js</pre>
+      <div class="tips">Use the list command if want to see what's in a configuration file and if its captures are valid. This can be used with --pages and --captures filters.</div>
 
     </article>
 
