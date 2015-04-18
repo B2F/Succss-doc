@@ -1,3 +1,7 @@
+article {
+  margin-top:8px;
+}
+
 body {
   color:white;
   font-family: 'Roboto', sans-serif;
@@ -31,6 +35,14 @@ header #header-text {
   font-size:0.9em;
 }
 
+pre, .headline, .tips, article ul li {
+  font-size:19px;
+}
+
+span#more-infos-headline {
+  font-size:23px;
+}
+
 header span#logo {
   font-size:91px;
   color: #FFC;
@@ -55,9 +67,12 @@ div#core article h1 {
 }
 
 h2, h3 {
-  border-top: 1px solid #345;
-  margin-top: 49px;
-  padding-top: 19px;
+  font-size: 21px;
+  border-bottom: 1px solid #123;
+  margin-top: 15px;
+  padding-top: 17px;
+  padding-bottom: 7px;
+  margin-bottom: 17px;
 }
 
 div#core article h2 a {
@@ -73,6 +88,7 @@ div#core article span.headline a,
 div#core article ul a {
   color:#100;
   border-radius:3px;
+  padding:0 3px;
   background-color:rgba(255,255,204,0.7);
 }
 
@@ -85,8 +101,7 @@ div#core article ul li {
 }
 
 div#core span.headline {
-  font-size:23px;
-  padding:18px 0px 7px;
+  padding:7px 0px;
   display:block;
 }
 
@@ -99,8 +114,7 @@ div#core pre {
 
 div#core pre {
   background-color:#254061;
-  margin:0;
-  font-size:23px;
+  margin:17px 0;
   overflow:auto;
 }
 
@@ -119,7 +133,7 @@ div#core pre.code .line-highlight:before {
 
 div#core div.tips {
   background:rgba(204, 204, 204, 0.7) url("../img/infos.png") no-repeat 99.9% 1px;
-  margin:3px 0;
+  margin:17px 0;
   font-size:17px;
   color:black;
   padding-right:33px;
