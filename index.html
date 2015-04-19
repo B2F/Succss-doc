@@ -41,12 +41,12 @@
 
     <article id="home">
 
-      <span class="headline">Grab it:</span>
+      <h2>Grab it:</h2>
       <pre>npm install -g succss</pre>
       <div class="tips">Succss rely on <a href="http://phantomjs.org/" target="_blank">PhantomJS</a> and <a href="http://casperjs.org/" target="_blank">CasperJS</a> dependencies, automatically resolved by <a href="https://www.npmjs.com/" target="_blank">npm</a>. Follow <a href="/installation">this guide</a> if you have trouble with npm.</div>
 
-      <span class="headline">Describe your website CSS:</span>
-      <pre class="code" style="height:470px;"><code class="language-javascript">//data.js
+      <h2>Describe your website CSS:</h2>
+      <pre class="code" style="height:470px;"><code class="language-javascript">// data.js
 Succss.pages = {
   'home': {
     url:'succss.ifzenelse.net',
@@ -82,15 +82,15 @@ Succss.viewports = {
       <div class="tips">Succss can do more, such as interactions with the browser before capture.
         Later, you can also read <a href="/configuration">advanced Configuration</a>.</div>
 
-      <span class="headline">Take reference screenshots:</span>
+      <h2>Take reference screenshots:</h2>
       <pre><code>succss add data.js</code></pre>
       <div class="tips">For advanced usage, the succss command has several options such as pages, captures and viewports <a href="/commandline#filters">filters</a>.</div>
 
-      <span class="headline">Compare reference screenshots to updates:</span>
+      <h2>Compare reference screenshots to updates:</h2>
       <pre><code>succss check data.js</code></pre>
       <div class="tips">Succss is bundled with imagediff (default) and ResembleJS for comparisons. Captures validations can be fully <a href="customize">customized</a>.</div>
 
-      <span class="headline" id="differences">See differences or success:</span>
+      <h2>See differences or success:</h2>
       <pre><img src="img/screenshots/imagediff.jpeg"/></pre>
       <div class="tips">This image extracted from selftests displays how differences are highlighted by <a href="https://github.com/HumbleSoftware/js-imagediff" target="_blank">Imagediff</a>. Take a look at <a href="/fork">Succss source code</a> if you know javascript.</div>
 
